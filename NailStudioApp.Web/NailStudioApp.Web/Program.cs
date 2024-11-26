@@ -1,11 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using NailStudioApp.Data;
+
 namespace NailStudioApp.Web
 {
+   
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            string connectionString = builder.Configuration.GetConnectionString("SQLServer");
+            builder.Services.AddDbContext<NailStudioDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });   
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 

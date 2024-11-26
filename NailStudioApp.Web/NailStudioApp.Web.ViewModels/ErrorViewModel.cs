@@ -1,4 +1,4 @@
-namespace NailStudioApp.Web.Models
+namespace NailStudioApp.Web.ViewModels
 {
     public class ErrorViewModel
     {
