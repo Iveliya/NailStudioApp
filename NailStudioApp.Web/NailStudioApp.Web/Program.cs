@@ -3,7 +3,7 @@ using NailStudioApp.Data;
 
 namespace NailStudioApp.Web
 {
-   
+    using static Web.Infrastructure.Extensions.ExtensionMethods;
     public class Program
     {
         public static void Main(string[] args)
@@ -37,7 +37,7 @@ namespace NailStudioApp.Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            app.ApplyMigration();
             app.Run();
         }
     }

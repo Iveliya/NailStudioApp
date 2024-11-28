@@ -15,7 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{BA773EC1-D63
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{A5DA2A69-B35B-4413-A608-DC64C740CD63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NailStudioApp.Data", "NailStudioApp.Data\NailStudioApp.Data.csproj", "{0F342888-37A3-4DD5-B385-7314EA852E4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NailStudioApp.Data", "NailStudioApp.Data\NailStudioApp.Data.csproj", "{0F342888-37A3-4DD5-B385-7314EA852E4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NailStudioApp.Web.Infrastructure", "NailStudioApp.Web.Infrastructure\NailStudioApp.Web.Infrastructure.csproj", "{B06027DB-00EE-4B48-9D0F-36EB39474CFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{0F342888-37A3-4DD5-B385-7314EA852E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F342888-37A3-4DD5-B385-7314EA852E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F342888-37A3-4DD5-B385-7314EA852E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B06027DB-00EE-4B48-9D0F-36EB39474CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06027DB-00EE-4B48-9D0F-36EB39474CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B06027DB-00EE-4B48-9D0F-36EB39474CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B06027DB-00EE-4B48-9D0F-36EB39474CFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{D470D0BC-B8BB-4D86-BB22-284E822772CE} = {BA773EC1-D637-456A-8C22-392D3921DFD5}
 		{7577B231-824A-4BA5-AE3A-FA1B4DB4A8B0} = {A5DA2A69-B35B-4413-A608-DC64C740CD63}
 		{0F342888-37A3-4DD5-B385-7314EA852E4D} = {A5DA2A69-B35B-4413-A608-DC64C740CD63}
+		{B06027DB-00EE-4B48-9D0F-36EB39474CFD} = {BA773EC1-D637-456A-8C22-392D3921DFD5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F3BCCAD-62B0-4ABB-87E6-4BDD65ECD315}
