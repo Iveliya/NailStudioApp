@@ -1,0 +1,46 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModels.Appointment.AppointmentIndexViewModel>
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<h2>Appointments</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Create New Appointment</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Client Name</th>
+            <th>Employee Name</th>
+            <th>Appointment Date</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.ClientName</td>
+                    <td>@appointment.EmployeeName</td>
+                    <td>@appointment.AppointmentDate.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@appointment.TotalPrice.ToString("C")</td>
+                    <td>@appointment.Status</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@appointment.Id" class="btn btn-info btn-sm">Details</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No appointments available.</td>
+            </tr>
+        }
+    </tbody>
+</table>
