@@ -1,37 +1,45 @@
-﻿@model NailStudioApp.Data.Models.Service
+﻿@model NailStudioApp.Web.ViewModels.Service.AddServiceFormModel
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Service</title>
-</head>
-<body>
-    <h1>Create a New Service</h1>
+@{
+    ViewData["Title"] = "Create New Service";
+}
 
-    <form asp-action="Create" asp-controller="NailStudio" method="post">
-        <div>
-            <label for="Name">Service Name:</label>
-            <input type="text" id="Name" name="Name" value="@Model?.Name" required />
-        </div>
-        <div>
-            <label for="Description">Description:</label>
-            <textarea id="Description" name="Description" required>@Model?.Description</textarea>
-        </div>
-        <div>
-            <label for="Price">Price:</label>
-            <input type="number" id="Price" name="Price" step="0.01" value="@Model?.Price" required />
-        </div>
-        <div>
-            <label for="Duration">Duration (HH:mm):</label>
-            <input type="text" id="Duration" name="Duration" placeholder="00:30" value="@Model?.Duration.ToString(@"hh\:mm")" required />
-        </div>
+<h1>Create New Service</h1>
 
-        <button type="submit">Create Service</button>
-        <a href="@Url.Action("Index", "NailStudio")">
-            <button type="button">Cancel</button>
-        </a>
-    </form>
-</body>
-</html>
+<form method="post">
+    <div class="form-group">
+        <label for="Name">Service Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea class="form-control" id="Description" name="Description" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <input type="number" step="0.01" class="form-control" id="Price" name="Price" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Duration">Duration (hh:mm)</label>
+        <input type="text" class="form-control" id="Duration" name="Duration" placeholder="hh:mm" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ImageUrl">Image URL</label>
+        <input type="text" class="form-control" id="ImageUrl" name="ImageUrl" placeholder="Optional" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Create</button>
+</form>
+<style>
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-success {
+        margin-top: 20px;
+    }
+</style>

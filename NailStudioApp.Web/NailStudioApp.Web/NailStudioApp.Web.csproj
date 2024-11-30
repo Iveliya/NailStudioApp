@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NailStudioApp.Common\NailStudioApp.Common.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Data.Models\NailStudioApp.Data.Models.csproj" />
     <ProjectReference Include="..\NailStudioApp.Data\NailStudioApp.Data.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.Infrastructure\NailStudioApp.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.ViewModels\NailStudioApp.Web.ViewModels.csproj" />

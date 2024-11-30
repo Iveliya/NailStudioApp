@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NailStudioApp.Data;
 using NailStudioApp.Data.Models;
+using NailStudioApp.Web.ViewModels.NailStudio;
+using NailStudioApp.Web.ViewModels.Service;
 using Org.BouncyCastle.Utilities.Collections;
 using System.Collections.Generic;
 
@@ -15,10 +18,21 @@ namespace NailStudioApp.Web.Controllers
             this.dbContext = dbContext;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Service> allServices = dbContext.Services.ToList();
-            return View(allServices);
+            var services = await dbContext.Services
+                 .Select(service => new ServiceIndexViewModel
+                 {
+                     Id = service.Id,
+                     Name = service.Name,
+                     Description = service.Description,
+                     Price = service.Price,
+                     Duration = service.Duration,
+                     ImageUrl = service.ImageUrl
+                 })
+                 .ToListAsync();
+
+            return View(services);
         }
         [HttpGet]
         public IActionResult Create()
@@ -26,12 +40,35 @@ namespace NailStudioApp.Web.Controllers
             return this.View();
         }
         [HttpPost]
-        public IActionResult Create(Service service)
+        public async Task<IActionResult> Create(AddServiceInputModel model)
         {
-            this.dbContext.Services.Add(service);
-            this.dbContext.SaveChanges();
-            return this.RedirectToAction(nameof(Index));  
+            if (ModelState.IsValid)
+            {
+                TimeSpan parsedDuration;
+                if (!TimeSpan.TryParseExact(model.Duration, @"hh\:mm", null, out parsedDuration))
+                {
+                    ModelState.AddModelError("Duration", "Duration must be in the format hh:mm.");
+                    return View(model);
+                }
+
+                var service = new Service
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Price = model.Price,
+                    Duration = parsedDuration,
+                    ImageUrl = model.ImageUrl 
+                };
+
+                dbContext.Services.Add(service);
+                await dbContext.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
         }
+    
         [HttpGet]
         public IActionResult Details(int id)
         {

@@ -1,1 +1,70 @@
-﻿
+﻿@model IEnumerable<NailStudioApp.Web.ViewModels.Service.ServiceIndexViewModel>
+
+@{
+    ViewData["Title"] = "Services";
+}
+
+<h1>Our Services</h1>
+
+<a href="@Url.Action("Create", "Service")" class="btn btn-success">Create</a>
+
+<div class="services-container">
+    @foreach (var service in Model)
+    {
+        <div class="service-item">
+            @if (!string.IsNullOrEmpty(service.ImageUrl))
+            {
+                <img src="@service.ImageUrl" alt="@service.Name" class="service-image" />
+            }
+            <h2>@service.Name</h2>
+            <p>@service.Description</p>
+            <p><strong>Price:</strong> @service.Price.ToString("C")</p>
+            <p><strong>Duration:</strong> @service.Duration.ToString(@"hh\:mm")</p>
+
+            <a href="@Url.Action("Create", "Appointment", new { id = service.Id })" class="btn btn-info">Save a time</a>
+        </div>
+    }
+</div>
+
+<style>
+    .services-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .service-item {
+        width: 30%;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        text-align: center;
+        background-color: #f9f9f9;
+    }
+
+    .service-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 15px;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        margin-bottom: 20px;
+    }
+</style>
