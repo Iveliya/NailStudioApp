@@ -40,7 +40,8 @@ namespace NailStudioApp.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false)
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,11 +196,11 @@ namespace NailStudioApp.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Services",
-                columns: new[] { "Id", "Description", "Duration", "Name", "Price" },
+                columns: new[] { "Id", "Description", "Duration", "ImageUrl", "Name", "Price" },
                 values: new object[,]
                 {
-                    { 1, "A relaxing manicure session including nail shaping, cuticle care, and polish application.", new TimeSpan(0, 0, 45, 0, 0), "Manicure", 25.00m },
-                    { 2, "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.", new TimeSpan(0, 1, 0, 0, 0), "Pedicure", 35.00m }
+                    { 1, "A relaxing manicure session including nail shaping, cuticle care, and polish application.", new TimeSpan(0, 0, 45, 0, 0), "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg", "Manicure", 25.00m },
+                    { 2, "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.", new TimeSpan(0, 1, 0, 0, 0), "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg", "Pedicure", 35.00m }
                 });
 
             migrationBuilder.InsertData(
@@ -207,8 +208,8 @@ namespace NailStudioApp.Data.Migrations
                 columns: new[] { "Id", "CreatedAt", "Email", "PasswordHash", "PhoneNumber", "Role", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 26, 21, 23, 7, 404, DateTimeKind.Utc).AddTicks(9469), "admin@example.com", "hashed_password", "123456789", "Admin", "admin" },
-                    { 2, new DateTime(2024, 11, 26, 21, 23, 7, 404, DateTimeKind.Utc).AddTicks(9480), "client1@example.com", "hashed_password", "987654321", "Client", "client1" }
+                    { 1, new DateTime(2024, 11, 30, 16, 32, 6, 487, DateTimeKind.Utc).AddTicks(1008), "admin@example.com", "hashed_password", "123456789", "Admin", "admin" },
+                    { 2, new DateTime(2024, 11, 30, 16, 32, 6, 487, DateTimeKind.Utc).AddTicks(1011), "client1@example.com", "hashed_password", "987654321", "Client", "client1" }
                 });
 
             migrationBuilder.InsertData(
@@ -234,8 +235,8 @@ namespace NailStudioApp.Data.Migrations
                 columns: new[] { "Id", "AppointmentDate", "ClientId", "EmployeeId", "Status", "TotalPrice" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 11, 27, 21, 23, 7, 399, DateTimeKind.Utc).AddTicks(5376), 1, 1, "Confirmed", 50.00m },
-                    { 2, new DateTime(2024, 11, 29, 21, 23, 7, 399, DateTimeKind.Utc).AddTicks(5395), 2, 2, "Pending", 75.00m }
+                    { 1, new DateTime(2024, 12, 1, 16, 32, 6, 485, DateTimeKind.Utc).AddTicks(7762), 1, 1, "Confirmed", 50.00m },
+                    { 2, new DateTime(2024, 12, 3, 16, 32, 6, 485, DateTimeKind.Utc).AddTicks(7770), 2, 2, "Pending", 75.00m }
                 });
 
             migrationBuilder.InsertData(
@@ -243,8 +244,8 @@ namespace NailStudioApp.Data.Migrations
                 columns: new[] { "Id", "ClientId", "Comment", "Rating", "ReviewDate" },
                 values: new object[,]
                 {
-                    { 1, 1, "Excellent service! Highly recommend.", 5, new DateTime(2024, 11, 26, 21, 23, 7, 403, DateTimeKind.Utc).AddTicks(3367) },
-                    { 2, 2, "Good, but could be better with timing.", 4, new DateTime(2024, 11, 25, 21, 23, 7, 403, DateTimeKind.Utc).AddTicks(3375) }
+                    { 1, 1, "Excellent service! Highly recommend.", 5, new DateTime(2024, 11, 30, 16, 32, 6, 486, DateTimeKind.Utc).AddTicks(7351) },
+                    { 2, 2, "Good, but could be better with timing.", 4, new DateTime(2024, 11, 29, 16, 32, 6, 486, DateTimeKind.Utc).AddTicks(7354) }
                 });
 
             migrationBuilder.InsertData(

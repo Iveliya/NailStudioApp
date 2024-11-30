@@ -12,6 +12,7 @@ namespace NailStudioApp.Common
         {
             public const int NameMaxLength = 50;
             public const int DescriptionMaxLength= 500;
+            public const int UrlMaxLength = 500;
             public const string PriceValidation = "decimal(18,2)";
         }
 

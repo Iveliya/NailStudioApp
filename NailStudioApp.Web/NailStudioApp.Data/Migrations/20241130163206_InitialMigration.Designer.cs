@@ -12,7 +12,7 @@ using NailStudioApp.Data;
 namespace NailStudioApp.Data.Migrations
 {
     [DbContext(typeof(NailStudioDbContext))]
-    [Migration("20241126212308_InitialMigration")]
+    [Migration("20241130163206_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -64,7 +64,7 @@ namespace NailStudioApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            AppointmentDate = new DateTime(2024, 11, 27, 21, 23, 7, 399, DateTimeKind.Utc).AddTicks(5376),
+                            AppointmentDate = new DateTime(2024, 12, 1, 16, 32, 6, 485, DateTimeKind.Utc).AddTicks(7762),
                             ClientId = 1,
                             EmployeeId = 1,
                             Status = "Confirmed",
@@ -73,7 +73,7 @@ namespace NailStudioApp.Data.Migrations
                         new
                         {
                             Id = 2,
-                            AppointmentDate = new DateTime(2024, 11, 29, 21, 23, 7, 399, DateTimeKind.Utc).AddTicks(5395),
+                            AppointmentDate = new DateTime(2024, 12, 3, 16, 32, 6, 485, DateTimeKind.Utc).AddTicks(7770),
                             ClientId = 2,
                             EmployeeId = 2,
                             Status = "Pending",
@@ -258,7 +258,7 @@ namespace NailStudioApp.Data.Migrations
                             ClientId = 1,
                             Comment = "Excellent service! Highly recommend.",
                             Rating = 5,
-                            ReviewDate = new DateTime(2024, 11, 26, 21, 23, 7, 403, DateTimeKind.Utc).AddTicks(3367)
+                            ReviewDate = new DateTime(2024, 11, 30, 16, 32, 6, 486, DateTimeKind.Utc).AddTicks(7351)
                         },
                         new
                         {
@@ -266,7 +266,7 @@ namespace NailStudioApp.Data.Migrations
                             ClientId = 2,
                             Comment = "Good, but could be better with timing.",
                             Rating = 4,
-                            ReviewDate = new DateTime(2024, 11, 25, 21, 23, 7, 403, DateTimeKind.Utc).AddTicks(3375)
+                            ReviewDate = new DateTime(2024, 11, 29, 16, 32, 6, 486, DateTimeKind.Utc).AddTicks(7354)
                         });
                 });
 
@@ -331,6 +331,11 @@ namespace NailStudioApp.Data.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -349,6 +354,7 @@ namespace NailStudioApp.Data.Migrations
                             Id = 1,
                             Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
                             Duration = new TimeSpan(0, 0, 45, 0, 0),
+                            ImageUrl = "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg",
                             Name = "Manicure",
                             Price = 25.00m
                         },
@@ -357,6 +363,7 @@ namespace NailStudioApp.Data.Migrations
                             Id = 2,
                             Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
                             Duration = new TimeSpan(0, 1, 0, 0, 0),
+                            ImageUrl = "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg",
                             Name = "Pedicure",
                             Price = 35.00m
                         });
@@ -406,7 +413,7 @@ namespace NailStudioApp.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2024, 11, 26, 21, 23, 7, 404, DateTimeKind.Utc).AddTicks(9469),
+                            CreatedAt = new DateTime(2024, 11, 30, 16, 32, 6, 487, DateTimeKind.Utc).AddTicks(1008),
                             Email = "admin@example.com",
                             PasswordHash = "hashed_password",
                             PhoneNumber = "123456789",
@@ -416,7 +423,7 @@ namespace NailStudioApp.Data.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2024, 11, 26, 21, 23, 7, 404, DateTimeKind.Utc).AddTicks(9480),
+                            CreatedAt = new DateTime(2024, 11, 30, 16, 32, 6, 487, DateTimeKind.Utc).AddTicks(1011),
                             Email = "client1@example.com",
                             PasswordHash = "hashed_password",
                             PhoneNumber = "987654321",

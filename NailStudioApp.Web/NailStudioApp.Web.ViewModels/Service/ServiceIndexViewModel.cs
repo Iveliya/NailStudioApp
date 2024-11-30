@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NailStudioApp.Data.Models
+namespace NailStudioApp.Web.ViewModels.Service
 {
-    public class Service
+    public class ServiceIndexViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = null!;
@@ -14,7 +14,5 @@ namespace NailStudioApp.Data.Models
         public decimal Price { get; set; }
         public TimeSpan Duration { get; set; }
         public string ImageUrl { get; set; } = null!;
-        public ICollection<AppointmentService> AppointmentServices { get; set; } = new List<AppointmentService>();
-
     }
 }

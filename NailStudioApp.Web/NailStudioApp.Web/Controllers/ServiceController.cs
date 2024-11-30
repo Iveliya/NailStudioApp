@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace NailStudioApp.Web.Controllers
 {
-    public class NailStudioController : Controller
+    public class ServiceController : Controller
     {
         private readonly  NailStudioDbContext dbContext;
 
-        public NailStudioController(NailStudioDbContext dbContext)
+        public ServiceController(NailStudioDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

@@ -20,11 +20,15 @@ namespace NailStudioApp.Data.Configurations
                 .HasMaxLength(DescriptionMaxLength);
 
             builder.Property(m => m.Price)
-              .IsRequired()
-              .HasColumnType(PriceValidation);
+                .IsRequired()
+                .HasColumnType(PriceValidation);
 
             builder.Property(m => m.Duration)
                 .IsRequired();
+
+            builder.Property(m => m.ImageUrl) 
+                .IsRequired() 
+                .HasMaxLength(UrlMaxLength); 
 
             builder
                 .HasMany(s => s.AppointmentServices)
@@ -36,26 +40,28 @@ namespace NailStudioApp.Data.Configurations
         }
         private List<Service> SeedServices()
         {
-            List<Service> services = new List<Service>() 
-            { 
-              new Service()
-              {
-                  Id = 1,
-                  Name = "Manicure",
-                  Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
-                  Price = 25.00m,
-                  Duration = new TimeSpan(0, 45, 0), // 45 minutes
-                  AppointmentServices = new List<AppointmentService>()
-              },
-              new Service()
-              {
-                  Id = 2,
-                  Name = "Pedicure",
-                  Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
-                  Price = 35.00m,
-                  Duration = new TimeSpan(1, 0, 0), // 1 hour
-                  AppointmentServices = new List<AppointmentService>()
-              }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+            List<Service> services = new List<Service>()
+            {
+                new Service()
+                {
+                    Id = 1,
+                    Name = "Manicure",
+                    Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
+                    Price = 25.00m,
+                    Duration = new TimeSpan(0, 45, 0), // 45 minutes
+                    ImageUrl = "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg", 
+                    AppointmentServices = new List<AppointmentService>()
+                },
+                new Service()
+                {
+                    Id = 2,
+                    Name = "Pedicure",
+                    Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
+                    Price = 35.00m,
+                    Duration = new TimeSpan(1, 0, 0), // 1 hour
+                    ImageUrl = "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg", 
+                    AppointmentServices = new List<AppointmentService>()
+                }
             };
             return services;
         }
