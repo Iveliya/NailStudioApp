@@ -28,11 +28,6 @@ namespace NailStudioApp.Data.Configurations
             builder.Property(r => r.ReviewDate)
                 .IsRequired();
 
-            builder
-                .HasOne(r => r.Client) 
-                .WithMany(c => c.Reviews)
-                .HasForeignKey(r => r.ClientId)
-                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasData(this.SeedReviews());
         }

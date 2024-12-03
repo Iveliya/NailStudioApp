@@ -9,7 +9,6 @@ namespace NailStudioApp.Web.ViewModels.Appointment
     public class AppointmentIndexViewModel
     {
         public int Id { get; set; }
-        public string ClientName { get; set; } = string.Empty;
         public string EmployeeName { get; set; } = string.Empty;
         public DateTime AppointmentDate { get; set; }
         public decimal TotalPrice { get; set; }

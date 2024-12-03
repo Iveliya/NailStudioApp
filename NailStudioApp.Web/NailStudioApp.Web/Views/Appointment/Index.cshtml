@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NailStudioApp.Web.ViewModels.Appointment.AppointmentIndexViewModel>
+﻿@* @model IEnumerable<NailStudioApp.Web.ViewModels.Appointment.AppointmentIndexViewModel>
 
 @{
     ViewData["Title"] = "All Appointments";
@@ -25,7 +25,6 @@
             foreach (var appointment in Model)
             {
                 <tr>
-                    <td>@appointment.ClientName</td>
                     <td>@appointment.EmployeeName</td>
                     <td>@appointment.AppointmentDate.ToString("yyyy-MM-dd HH:mm")</td>
                     <td>@appointment.TotalPrice.ToString("C")</td>
@@ -44,3 +43,4 @@
         }
     </tbody>
 </table>
+ *@

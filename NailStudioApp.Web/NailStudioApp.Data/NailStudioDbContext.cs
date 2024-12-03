@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NailStudioApp.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -9,19 +11,13 @@ using System.Threading.Tasks;
 
 namespace NailStudioApp.Data
 {
-    public class NailStudioDbContext: DbContext
+    public class NailStudioDbContext: IdentityDbContext<ApplicationUser,IdentityRole<Guid>,Guid>
     {
-        public NailStudioDbContext()
-        {
-
-        }
+        public NailStudioDbContext() { }
         public NailStudioDbContext(DbContextOptions options) : base(options)
         { 
 
         }
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Client> Clients { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
@@ -31,6 +27,7 @@ namespace NailStudioApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

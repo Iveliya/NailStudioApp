@@ -15,7 +15,6 @@ namespace NailStudioApp.Data.Models
         public decimal TotalPrice { get; set; }
         public string Status { get; set; } = "Pending";
 
-        public Client Client { get; set; } = null!;
         public Employee Employee { get; set; } = null!;
         public ICollection<AppointmentService> AppointmentServices { get; set; } = new List<AppointmentService>();
 

@@ -10,8 +10,6 @@ namespace NailStudioApp.Web.ViewModels.Appointment
     using static Common.EntityValidationConstans.Appointment;
     public class AddAppointmentFormModel
     {
-        [Required]
-        public int ClientId { get; set; }
 
         [Required]
         public int EmployeeId { get; set; }

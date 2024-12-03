@@ -1,4 +1,4 @@
-﻿@model NailStudioApp.Web.ViewModels.Appointment.AddAppointmentFormModel
+﻿@* @model NailStudioApp.Web.ViewModels.Appointment.AddAppointmentFormModel
 
 @{
     ViewData["Title"] = "Create Appointment";
@@ -8,13 +8,6 @@
 
 <div class="container">
     <form asp-action="Create" method="post">
-        <div class="form-group">
-            <label asp-for="ClientId" class="control-label">Client</label>
-            <select asp-for="ClientId" class="form-control" asp-items="ViewBag.Clients">
-                <option value="">-- Select Client --</option>
-            </select>
-            <span asp-validation-for="ClientId" class="text-danger"></span>
-        </div>
 
         <div class="form-group">
             <label asp-for="EmployeeId" class="control-label">Employee</label>
@@ -55,3 +48,4 @@
 @section Scripts {
     @Html.Partial("_ValidationScriptsPartial")
 }
+ *@

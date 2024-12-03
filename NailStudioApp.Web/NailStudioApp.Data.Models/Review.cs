@@ -14,7 +14,6 @@ namespace NailStudioApp.Data.Models
         public int Rating { get; set; } // From 1 to 5
         public DateTime ReviewDate { get; set; }
 
-        public Client Client { get; set; } = null!;
 
     }
 }

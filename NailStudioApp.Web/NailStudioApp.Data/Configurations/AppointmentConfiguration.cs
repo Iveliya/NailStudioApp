@@ -28,11 +28,7 @@ namespace NailStudioApp.Data.Configurations
                 .HasMaxLength(StatusMaxLength) 
                 .HasDefaultValue(StatusDefaultValue);
 
-            builder
-                .HasOne(a => a.Client) 
-                .WithMany(c => c.Appointments)
-                .HasForeignKey(a => a.ClientId)
-                .OnDelete(DeleteBehavior.Cascade);
+            
 
             builder
                 .HasOne(a => a.Employee)
