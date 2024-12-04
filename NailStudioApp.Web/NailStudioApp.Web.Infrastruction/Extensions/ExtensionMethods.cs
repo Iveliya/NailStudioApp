@@ -15,7 +15,7 @@ namespace NailStudioApp.Web.Infrastruction.Extensions
         public static IApplicationBuilder ApplyMigration(this IApplicationBuilder app)
         {
             using IServiceScope serviceScope = app.ApplicationServices.CreateScope();
-            NailStudioAppDbContext dbCotext = serviceScope.ServiceProvider.GetRequiredService<NailStudioAppDbContext>()!;
+            NailDbContext dbCotext = serviceScope.ServiceProvider.GetRequiredService<NailDbContext>()!;
             dbCotext.Database.Migrate();
             return app;
 

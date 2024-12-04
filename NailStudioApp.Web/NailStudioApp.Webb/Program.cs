@@ -4,6 +4,10 @@ using NailStudio.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using NailStudioApp.Web.Infrastruction.Extensions;
 using NailStudio.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Configuration;
 
 namespace NailStudioApp.Webb
 {
@@ -12,18 +16,42 @@ namespace NailStudioApp.Webb
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var connectionString = builder.Configuration.GetConnectionString("NailStudioAppDbContextConnection") ?? throw new InvalidOperationException("Connection string 'NailStudioAppDbContextConnection' not found.");
+
+            builder.Services.AddDbContext<NailStudio.Data.NailDbContext>(options =>
+                options.UseSqlServer("Server=DESKTOP-AEUQ5AJ\\SQLEXPRESS;Database=NailStudio;Trusted_Connection=True;TrustServerCertificate=True")
+            );
+
+            builder.Services
+                  .AddIdentity<User, IdentityRole<Guid>>(options =>
+                  {
+                      options.Password.RequireDigit = false;
+                      options.Password.RequireLowercase = false;
+                      options.Password.RequireNonAlphanumeric = false;
+                      options.Password.RequireUppercase = false;
+                      options.Password.RequiredLength = 6;
+                      options.Password.RequiredUniqueChars = 1;
+                      options.SignIn.RequireConfirmedAccount = false;
+
+                      // Lockout settings
+                      options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                      options.Lockout.MaxFailedAccessAttempts = 5;
+                      options.Lockout.AllowedForNewUsers = true;
+
+                      // User settings
+                      options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                      options.User.RequireUniqueEmail = true;
+
+                      // SignIn settings
+                      options.SignIn.RequireConfirmedEmail = false;
+                      options.SignIn.RequireConfirmedPhoneNumber = false;
+                  })
+                  .AddEntityFrameworkStores<NailDbContext>()
+                  .AddDefaultTokenProviders();
 
 
-            builder.Services.AddDbContext<NailStudioAppDbContext>(options =>
-    options.UseSqlServer("Server=DESKTOP-AEUQ5AJ\\SQLEXPRESS;Database=NailStudioDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"));
-
-
-            builder.Services.AddDefaultIdentity<ApplicationUser>()
-              .AddEntityFrameworkStores<NailStudioAppDbContext>();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddRazorPages();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -46,8 +74,9 @@ namespace NailStudioApp.Webb
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
-            app.ApplyMigration();
+            //app.ApplyMigration();
             app.Run();
+            
         }
     }
 }

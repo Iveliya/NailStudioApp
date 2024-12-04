@@ -30,3 +30,4 @@ namespace NailStudioApp.Webb.Controllers
         }
     }
 }
+//<partial name="_LoginPartial"/>

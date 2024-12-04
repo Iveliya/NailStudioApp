@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NailStudio.Data;
 
@@ -10,10 +11,12 @@ using NailStudio.Data;
 
 namespace NailStudio.Data.Migrations
 {
-    [DbContext(typeof(NailStudioAppDbContext))]
-    partial class NailStudioAppDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(NailDbContext))]
+    [Migration("20241204101537_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,12 +104,10 @@ namespace NailStudio.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -142,12 +143,10 @@ namespace NailStudio.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -157,7 +156,123 @@ namespace NailStudio.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("NailStudio.Data.Models.ApplicationUser", b =>
+            modelBuilder.Entity("NailStudio.Data.Models.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StaffMemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("StaffMemberId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Service", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("DurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ddd660a6-8588-4124-9e11-7e8928a3d1ab"),
+                            Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
+                            DurationInMinutes = 45,
+                            ImageUrl = "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg",
+                            Name = "Manicure",
+                            Price = 25.00m
+                        },
+                        new
+                        {
+                            Id = new Guid("dd782107-e3b7-4cb2-9e26-8f9c2c581c2d"),
+                            Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
+                            DurationInMinutes = 60,
+                            ImageUrl = "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg",
+                            Name = "Pedicure",
+                            Price = 35.00m
+                        });
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.StaffMember", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StaffMembers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("74da0a73-2f71-464c-8edc-f2e8910e0ac7"),
+                            Name = "John Doe",
+                            Specialization = "Manicure"
+                        },
+                        new
+                        {
+                            Id = new Guid("9f6d5cd4-a5b6-4c6e-85f9-af9b132e1e0c"),
+                            Name = "Jane Smith",
+                            Specialization = "Pedicure"
+                        });
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,6 +297,11 @@ namespace NailStudio.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -223,58 +343,19 @@ namespace NailStudio.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("NailStudio.Data.Models.Service", b =>
+            modelBuilder.Entity("NailStudio.Data.Models.UserService", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.HasKey("UserId", "ServiceId");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
+                    b.HasIndex("ServiceId");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Services");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
-                            Duration = new TimeSpan(0, 0, 45, 0, 0),
-                            ImageUrl = "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg",
-                            Name = "Manicure",
-                            Price = 25.00m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
-                            Duration = new TimeSpan(0, 1, 0, 0, 0),
-                            ImageUrl = "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg",
-                            Name = "Pedicure",
-                            Price = 35.00m
-                        });
+                    b.ToTable("UserServices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -288,7 +369,7 @@ namespace NailStudio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("NailStudio.Data.Models.ApplicationUser", null)
+                    b.HasOne("NailStudio.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -297,7 +378,7 @@ namespace NailStudio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("NailStudio.Data.Models.ApplicationUser", null)
+                    b.HasOne("NailStudio.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -312,7 +393,7 @@ namespace NailStudio.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("NailStudio.Data.Models.ApplicationUser", null)
+                    b.HasOne("NailStudio.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -321,11 +402,75 @@ namespace NailStudio.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("NailStudio.Data.Models.ApplicationUser", null)
+                    b.HasOne("NailStudio.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Appointment", b =>
+                {
+                    b.HasOne("NailStudio.Data.Models.Service", "Service")
+                        .WithMany("Appointments")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NailStudio.Data.Models.StaffMember", "StaffMember")
+                        .WithMany("Appointments")
+                        .HasForeignKey("StaffMemberId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("NailStudio.Data.Models.User", "User")
+                        .WithMany("Appointments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("StaffMember");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.UserService", b =>
+                {
+                    b.HasOne("NailStudio.Data.Models.Service", "Service")
+                        .WithMany("UserServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NailStudio.Data.Models.User", "User")
+                        .WithMany("UserServices")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Service", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("UserServices");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.StaffMember", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.User", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("UserServices");
                 });
 #pragma warning restore 612, 618
         }
