@@ -1,0 +1,92 @@
+﻿@model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
+
+@{
+    ViewData["Title"] = "Create Appointment";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-info text-white rounded-top">
+            <h3 class="text-center mb-0">Create Appointment</h3>
+        </div>
+
+        <div class="card-body p-5">
+            <form asp-action="Create" method="post" class="needs-validation" novalidate>
+
+                <div class="mb-4">
+                    <label for="UserId" class="form-label fw-bold text-secondary">User</label>
+                    <select class="form-select form-select-lg rounded-3" id="UserId" name="UserId" required>
+                        <option value="">Select User</option>
+                        @foreach (var user in Model.Users)
+                        {
+                            <option value="@user.Value">@user.Text</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a user.
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="ServiceId" class="form-label fw-bold text-secondary">Service</label>
+                    <select class="form-select form-select-lg rounded-3" id="ServiceId" name="ServiceId" required>
+                        <option value="">Select Service</option>
+                        @foreach (var service in Model.Services)
+                        {
+                            <option value="@service.Value">@service.Text</option>
+                        }
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a service.
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="StaffMemberId" class="form-label fw-bold text-secondary">Staff Member</label>
+                    <select class="form-select form-select-lg rounded-3" id="StaffMemberId" name="StaffMemberId">
+                        <option value="">Select Staff Member (Optional)</option>
+                        @foreach (var staff in Model.StaffMembers)
+                        {
+                            <option value="@staff.Value">@staff.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="AppointmentDate" class="form-label fw-bold text-secondary">Appointment Date</label>
+                    <input type="datetime-local" class="form-control form-control-lg rounded-3" id="AppointmentDate" name="AppointmentDate" required>
+                    <div class="invalid-feedback">
+                        Please select a valid date and time.
+                    </div>
+                </div>
+
+               
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="@Url.Action("Index", "Appointment")" class="btn btn-outline-secondary btn-lg shadow">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Back to Appointments
+                    </a>
+                    
+                    <button type="submit" class="btn btn-success btn-lg shadow">
+                        <i class="bi bi-check-circle me-2"></i> Create Appointment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>

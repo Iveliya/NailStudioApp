@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Appointment.AppointmentIndexViewModel>
+
 @{
+    ViewData["Title"] = "Appointments";
 }
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center text-primary fw-bold mb-0">Your Appointments</h2>
+        <a href="/Appointment/Create" class="btn btn-success btn-lg shadow-lg d-flex align-items-center">
+            <i class="bi bi-calendar-plus me-2"></i> Book New Appointment
+        </a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var appointment in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-lg border-0 h-100">
+                        <div class="card-header bg-info text-white text-center">
+                            <h5 class="mb-0">@appointment.ServiceName</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Customer:</strong> @appointment.UserName</p>
+                            <p><strong>Appointment Date:</strong> @appointment.FormattedDate</p>
+                            <p><strong>Price:</strong> @appointment.ServicePrice</p>
+                            <p><strong>Staff Member:</strong> @appointment.StaffMemberName</p>
+                            <a href="/Appointment/Details/@appointment.Id" class="btn btn-primary btn-sm shadow-sm">
+                                <i class="bi bi-eye me-2"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            <strong>No appointments found.</strong>
+        </div>
+    }
+</div>
+
