@@ -1,0 +1,46 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Service.ServiceIndexViewModel>
+
+@{
+    ViewData["Title"] = "Services";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-center text-primary fw-bold mb-0">Our Premium Services</h2>
+        <a href="/Service/AddService" class="btn btn-success btn-lg shadow-lg d-flex align-items-center">
+            <i class="bi bi-plus-circle me-2"></i> Add Service
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var service in Model)
+        {
+            <div class="col">
+                <div class="card shadow-lg border-0 h-100">
+                  
+                    <div class="position-relative">
+                        <img src="@service.ImageUrl" alt="Image of @service.Name" class="card-img-top rounded-top" style="height: 200px; object-fit: cover;" />
+                        <span class="position-absolute top-0 start-0 m-2 badge bg-primary text-white shadow">
+                            @service.Price.ToString("C")
+                        </span>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold text-dark">@service.Name</h5>
+                        <p class="card-text text-muted"><i class="bi bi-clock me-1"></i> Duration: @service.DurationInMinutes minutes</p>
+                
+                        <a href="/Service/Detail/@service.Id" class="btn btn-primary btn-sm shadow-sm">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="card shadow-lg mt-5 border-0">
+    <div class="card-body text-center bg-light">
+        <h5 class="text-primary fw-bold">Book Your Appointment Now!</h5>
+        <p class="text-muted">Each of our services is designed to provide you with a luxurious and relaxing experience. We look forward to pampering you!</p>
+        <a href="/Booking" class="btn btn-success btn-lg shadow-lg">Book Now</a>
+    </div>
+</div>

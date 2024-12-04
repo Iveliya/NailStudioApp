@@ -20,3 +20,38 @@ html {
 body {
   margin-bottom: 60px;
 }
+.card-header {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-body {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.btn-outline-secondary {
+    border-color: #0072ff;
+    color: #0072ff;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: #e0f7ff;
+        color: #0056b3;
+        transform: scale(1.05);
+    }
+
+.btn-primary {
+    background-color: #0072ff;
+    border-color: #0056b3;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }

@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data\NailStudio.Data.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.Infrastruction\NailStudioApp.Web.Infrastruction.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Web.ViewModel\NailStudioApp.Web.ViewModel.csproj" />
   </ItemGroup>
 
 </Project>
