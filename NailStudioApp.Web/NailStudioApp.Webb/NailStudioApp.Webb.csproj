@@ -26,8 +26,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data\NailStudio.Data.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Common\NailStudioApp.Common.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Services.Data\NailStudioApp.Services.Data.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.Infrastruction\NailStudioApp.Web.Infrastruction.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.ViewModel\NailStudioApp.Web.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Mappings\" />
   </ItemGroup>
 
 </Project>

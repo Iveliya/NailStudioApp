@@ -11,6 +11,17 @@ using System.Configuration;
 
 namespace NailStudioApp.Webb
 {
+    using AutoMapper;
+    using NailStudio.Data.Repository;
+    using NailStudio.Data.Repository.Interfaces;
+    using NailStudioApp.Services.Data;
+    using NailStudioApp.Services.Data.Interfaces;
+    using NailStudioApp.Web.ViewModel.Service;
+    using NailStudioApp.Webb.Models;
+    using Services.Mapping;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -46,13 +57,37 @@ namespace NailStudioApp.Webb
                       options.SignIn.RequireConfirmedPhoneNumber = false;
                   })
                   .AddEntityFrameworkStores<NailDbContext>()
-                  .AddDefaultTokenProviders();
+                  .AddRoles<IdentityRole<Guid>>()
+                  .AddSignInManager<SignInManager<User>>()
+                  .AddSignInManager<SignInManager<User>>();
+            //.AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.LoginPath = "/Identity/Account/Login";
+            });
+            builder.Services.AddScoped(typeof(IRepository<,>), typeof(BaseRepository<,>));
+            builder.Services.AddScoped<IRepository<Service, Guid>, BaseRepository<Service, Guid>>();
+            //builder.Services.AddScoped<IRepository<Appointment, Guid>, BaseRepository<Appointment, Guid>>();
+            //builder.Services.AddScoped<IRepository<StaffMember, Guid>, BaseRepository<StaffMember, Guid>>();
+            //builder.Services.AddScoped<IRepository<User, object>, BaseRepository<User, object>>();
 
+            builder.Services.RegisterRepositories(typeof(User).Assembly);
+//            AutoMapperConfig.RegisterMappings(
+//    typeof(ServiceIndexViewModel).Assembly,
+//    typeof(Program).Assembly
+//);
+
+//            builder.Services.AddScoped<IServiceService, ServiceService>();
+
+            //builder.Services.AddScoped<IServiceService,ServiceService>();   
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             var app = builder.Build();
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
+
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

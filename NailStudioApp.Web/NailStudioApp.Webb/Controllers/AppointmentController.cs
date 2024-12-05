@@ -29,7 +29,7 @@ namespace NailStudioApp.Webb.Controllers
             {
                 Id = a.Id,
                 ServiceName = services.ContainsKey(a.ServiceId) ? services[a.ServiceId].Name : "Unknown Service",
-                UserName = users.ContainsKey(a.UserId) ? users[a.UserId].Name : "Unknown User",
+                //UserName = users.ContainsKey(a.UserId) ? users[a.UserId].Name : "Unknown User",
                 AppointmentDate = a.AppointmentDate,
                 StaffMemberName = staffMembers.ContainsKey((Guid)a.StaffMemberId) ? staffMembers[(Guid)a.StaffMemberId]?.Name : "Unassigned",
                 ServicePrice = services.ContainsKey(a.ServiceId) ? services[a.ServiceId].Price.ToString("C") : "N/A"
@@ -43,7 +43,7 @@ namespace NailStudioApp.Webb.Controllers
                 .Select(u => new SelectListItem
                 {
                     Value = u.Id.ToString(),
-                    Text = u.Name
+                    //Text = u.Name
                 }).ToListAsync();
 
             var services = await _context.Services
@@ -93,7 +93,7 @@ namespace NailStudioApp.Webb.Controllers
                 .Select(u => new SelectListItem
                 {
                     Value = u.Id.ToString(),
-                    Text = u.Name
+                    //Text = u.Name
                 }).ToListAsync();
 
             var services = await _context.Services

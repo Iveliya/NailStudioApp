@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using NailStudio.Data;
 using NailStudio.Data.Models;
+using NailStudio.Data.Repository.Interfaces;
+using NailStudioApp.Services.Data.Interfaces;
 using NailStudioApp.Web.ViewModel.Service;
 
 namespace NailStudioApp.Webb.Controllers
@@ -9,15 +11,16 @@ namespace NailStudioApp.Webb.Controllers
     public class ServiceController : Controller
     {
         private readonly NailDbContext _context;
-
-        public ServiceController(NailDbContext context)
+        //private readonly IServiceService serviceService;
+        public ServiceController(NailDbContext context)//,IServiceService serviceService)
         {
             _context = context;
+           // this.serviceService = serviceService;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var services = await _context.Services
+            IEnumerable<ServiceIndexViewModel> services = await _context.Services
              .Select(s => new ServiceIndexViewModel
              {
                  Id = s.Id,
@@ -27,7 +30,8 @@ namespace NailStudioApp.Webb.Controllers
                  ImageUrl = s.ImageUrl,
              })
              .ToListAsync();
-
+            //IEnumerable<ServiceIndexViewModel> services=
+            //await this.serviceService.IndexGetAllOrderedAsync();
             return View(services);
         }
 
@@ -70,7 +74,7 @@ namespace NailStudioApp.Webb.Controllers
                 return NotFound(); 
             }
 
-            var viewModel = new DetailServiceViewModel
+            DetailServiceViewModel viewModel = new DetailServiceViewModel
             {
                 Id = service.Id,
                 Name = service.Name,
