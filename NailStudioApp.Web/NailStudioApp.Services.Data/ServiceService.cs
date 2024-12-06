@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection.Repositories;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NailStudio.Data.Models;
 using NailStudio.Data.Repository.Interfaces;
@@ -16,18 +17,42 @@ namespace NailStudioApp.Services.Data
     public class ServiceService : IServiceService
     {
         private IRepository<Service, Guid> serviceRepository;
-        public ServiceService(IRepository<Service, Guid> serviceRepository)
+        private readonly IMapper mapper;
+        public ServiceService(IRepository<Service, Guid> serviceRepository, IMapper mapper)
         {
             this.serviceRepository = serviceRepository;
+            this.mapper = mapper;
         }
-        public Task AddServiceAsync(AddServiceFormModel model)
+        public async Task AddServiceAsync(AddServiceFormModel model)
         {
-            throw new NotImplementedException();
+            var service = this.mapper.Map<Service>(model);
+
+            await this.serviceRepository.AddAsync(service);
+
+            await this.serviceRepository.SaveChangesAsync();
         }
 
-        public Task<DetailServiceViewModel> GetServiceDetailsByIdAsync(Guid id)
+        public async Task<DetailServiceViewModel> GetServiceDetailsByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var service = await this.serviceRepository
+        .All()  
+        .Where(s => s.Id == id)  
+        .FirstOrDefaultAsync();  
+
+            if (service == null)
+            {
+                return null;  
+            }
+            var serviceViewModel = this.mapper.Map<DetailServiceViewModel>(service);
+
+            return serviceViewModel;
+            //var service = await this.serviceRepository.GetByIdAsync(id);
+            //if (service == null)
+            //{
+            //    return null;  
+            //}
+
+            //return this.mapper.Map<DetailServiceViewModel>(service);
         }
 
         public async Task<IEnumerable<ServiceIndexViewModel>> IndexGetAllOrderedAsync()
@@ -37,6 +62,12 @@ namespace NailStudioApp.Services.Data
                .To<ServiceIndexViewModel>()
                .ToListAsync();
             return services;
+
+            //var services = await this.serviceRepository
+            //    .GetAll()
+            //    .To<ServiceIndexViewModel>()  
+            //    .ToListAsync();  
+            //return services;
         }
     }
 }

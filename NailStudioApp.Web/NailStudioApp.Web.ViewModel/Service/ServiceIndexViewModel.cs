@@ -1,4 +1,4 @@
-﻿using NailStudioApp.Services.Mapping;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace NailStudioApp.Web.ViewModel.Service
 {
 
     using NailStudio.Data.Models;
-    public class ServiceIndexViewModel //: IMapFrom<Service>
+    public class ServiceIndexViewModel 
     {
         public Guid Id { get; set; } 
         public string Name { get; set; } 

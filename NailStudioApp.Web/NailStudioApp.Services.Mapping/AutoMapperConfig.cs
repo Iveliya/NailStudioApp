@@ -10,6 +10,7 @@ namespace NailStudioApp.Services.Mapping
     using System.Reflection;
     using AutoMapper;
     using AutoMapper.Configuration.Conventions;
+    using NailStudioApp.Services.Mapping.Mapping;
 
     public class AutoMapperConfig
     {
@@ -94,6 +95,8 @@ namespace NailStudioApp.Services.Mapping
             public Type Source { get; set; }
             public Type Destination { get; set; }
         }
+
+
                 
         
     }

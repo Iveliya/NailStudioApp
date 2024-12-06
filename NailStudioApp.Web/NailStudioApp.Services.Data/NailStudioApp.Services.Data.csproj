@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data.Models\NailStudio.Data.Models.csproj" />
     <ProjectReference Include="..\NailStudio.Data\NailStudio.Data.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.ViewModel\NailStudioApp.Web.ViewModel.csproj" />
   </ItemGroup>
 

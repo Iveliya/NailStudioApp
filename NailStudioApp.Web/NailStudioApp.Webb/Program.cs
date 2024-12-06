@@ -16,6 +16,7 @@ namespace NailStudioApp.Webb
     using NailStudio.Data.Repository.Interfaces;
     using NailStudioApp.Services.Data;
     using NailStudioApp.Services.Data.Interfaces;
+    using NailStudioApp.Services.Mapping.Mapping;
     using NailStudioApp.Web.ViewModel.Service;
     using NailStudioApp.Webb.Models;
     using Services.Mapping;
@@ -60,27 +61,21 @@ namespace NailStudioApp.Webb
                   .AddRoles<IdentityRole<Guid>>()
                   .AddSignInManager<SignInManager<User>>()
                   .AddSignInManager<SignInManager<User>>();
-            //.AddDefaultTokenProviders();
 
             builder.Services.ConfigureApplicationCookie(cfg =>
             {
                 cfg.LoginPath = "/Identity/Account/Login";
             });
-            builder.Services.AddScoped(typeof(IRepository<,>), typeof(BaseRepository<,>));
-            builder.Services.AddScoped<IRepository<Service, Guid>, BaseRepository<Service, Guid>>();
+            //builder.Services.AddScoped(typeof(IRepository<,>), typeof(BaseRepository<,>));
+            //builder.Services.AddScoped<IRepository<Service, Guid>, BaseRepository<Service, Guid>>();
             //builder.Services.AddScoped<IRepository<Appointment, Guid>, BaseRepository<Appointment, Guid>>();
             //builder.Services.AddScoped<IRepository<StaffMember, Guid>, BaseRepository<StaffMember, Guid>>();
             //builder.Services.AddScoped<IRepository<User, object>, BaseRepository<User, object>>();
 
             builder.Services.RegisterRepositories(typeof(User).Assembly);
-//            AutoMapperConfig.RegisterMappings(
-//    typeof(ServiceIndexViewModel).Assembly,
-//    typeof(Program).Assembly
-//);
 
-//            builder.Services.AddScoped<IServiceService, ServiceService>();
-
-            //builder.Services.AddScoped<IServiceService,ServiceService>();   
+            builder.Services.AddAutoMapper(typeof(ServiceMappingProfile));
+              
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

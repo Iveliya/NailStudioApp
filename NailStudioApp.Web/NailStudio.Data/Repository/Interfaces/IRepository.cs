@@ -8,6 +8,8 @@ namespace NailStudio.Data.Repository.Interfaces
 {
     public interface IRepository<TType,TId>
     {
+        //IQueryable<TType> GetAll();
+        IQueryable<TType> All();
         IEnumerable<TType> GetAll();
         Task<IEnumerable<TType>> GetAllAsync();
 
@@ -24,5 +26,8 @@ namespace NailStudio.Data.Repository.Interfaces
 
         bool Delete(TId id);
         Task<bool> DeleteAsync(TId id);
+
+        Task SaveChangesAsync();
+        IEnumerable<object> GetAllAtach();
     }
 }

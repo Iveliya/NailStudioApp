@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data.Models\NailStudio.Data.Models.csproj" />
-    <ProjectReference Include="..\NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

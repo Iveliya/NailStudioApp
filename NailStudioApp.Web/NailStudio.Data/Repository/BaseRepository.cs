@@ -56,6 +56,15 @@ namespace NailStudio.Data.Repository
             await this.dbContext.SaveChangesAsync();
             return true;
         }
+        //public IQueryable<TType> GetAll()
+        //{
+        //    return dbSet.AsQueryable();
+        //}
+        public IQueryable<TType> All()
+        {
+            return dbSet.AsQueryable();  
+        }
+
 
         public IEnumerable<TType> GetAll()
         {
@@ -113,6 +122,15 @@ namespace NailStudio.Data.Repository
             {
                 return false;
             }
+        }
+        public async Task SaveChangesAsync()
+        {
+            await dbContext.SaveChangesAsync();  
+        }
+
+        public IEnumerable<object> GetAllAtach()
+        {
+            throw new NotImplementedException();
         }
     }
 }

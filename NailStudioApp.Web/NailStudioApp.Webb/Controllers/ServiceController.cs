@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NailStudio.Data;
 using NailStudio.Data.Models;
 using NailStudio.Data.Repository.Interfaces;
+using NailStudioApp.Services.Data;
 using NailStudioApp.Services.Data.Interfaces;
 using NailStudioApp.Web.ViewModel.Service;
 
@@ -11,28 +14,38 @@ namespace NailStudioApp.Webb.Controllers
     public class ServiceController : Controller
     {
         private readonly NailDbContext _context;
-        //private readonly IServiceService serviceService;
-        public ServiceController(NailDbContext context)//,IServiceService serviceService)
+        private readonly IMapper _mapper;
+        public ServiceController(NailDbContext context, IMapper mapper)
         {
             _context = context;
-           // this.serviceService = serviceService;
+            this._mapper = mapper;
         }
+
+       
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            IEnumerable<ServiceIndexViewModel> services = await _context.Services
-             .Select(s => new ServiceIndexViewModel
-             {
-                 Id = s.Id,
-                 Name = s.Name,
-                 Price = s.Price,
-                 DurationInMinutes = s.DurationInMinutes,
-                 ImageUrl = s.ImageUrl,
-             })
-             .ToListAsync();
+            //IEnumerable<ServiceIndexViewModel> services = await _context.Services
+            // .Select(s => new ServiceIndexViewModel
+            // {
+            //     Id = s.Id,
+            //     Name = s.Name,
+            //     Price = s.Price,
+            //     DurationInMinutes = s.DurationInMinutes,
+            //     ImageUrl = s.ImageUrl,
+            // })
+            // .ToListAsync();
             //IEnumerable<ServiceIndexViewModel> services=
             //await this.serviceService.IndexGetAllOrderedAsync();
-            return View(services);
+            //return View(services);
+
+
+            var serviceViewModels = await _context.Services
+        .ProjectTo<ServiceIndexViewModel>(_mapper.ConfigurationProvider)
+        .ToListAsync();
+
+            return View(serviceViewModels);
+
         }
 
         [HttpGet]
@@ -44,16 +57,29 @@ namespace NailStudioApp.Webb.Controllers
         [HttpPost]
         public async Task<IActionResult> AddService(AddServiceFormModel model)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    var service = new Service
+            //    {
+            //        Name = model.Name,
+            //        Price = model.Price,
+            //        DurationInMinutes = model.DurationInMinutes,
+            //        ImageUrl = model.ImageUrl,
+            //        Description = model.Description
+            //    };
+
+            //    await _context.Services.AddAsync(service);
+            //    await _context.SaveChangesAsync();
+
+            //    return RedirectToAction("Index");
+            //}
+
+            //return View(model);
+
+
             if (ModelState.IsValid)
             {
-                var service = new Service
-                {
-                    Name = model.Name,
-                    Price = model.Price,
-                    DurationInMinutes = model.DurationInMinutes,
-                    ImageUrl = model.ImageUrl,
-                    Description = model.Description
-                };
+                var service = _mapper.Map<Service>(model);
 
                 await _context.Services.AddAsync(service);
                 await _context.SaveChangesAsync();
@@ -67,24 +93,38 @@ namespace NailStudioApp.Webb.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
-            var service = await _context.Services.FindAsync(id); 
+            //var service = await _context.Services.FindAsync(id);
+
+            //if (service == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //DetailServiceViewModel viewModel = new DetailServiceViewModel
+            //{
+            //    Id = service.Id,
+            //    Name = service.Name,
+            //    Price = service.Price,
+            //    DurationInMinutes = service.DurationInMinutes,
+            //    ImageUrl = service.ImageUrl,
+            //    Description = service.Description
+            //};
+
+            //return View(viewModel);
+
+
+            var service = await _context.Services
+        .Where(s => s.Id == id) 
+        .FirstOrDefaultAsync();  
 
             if (service == null)
             {
                 return NotFound(); 
             }
 
-            DetailServiceViewModel viewModel = new DetailServiceViewModel
-            {
-                Id = service.Id,
-                Name = service.Name,
-                Price = service.Price,
-                DurationInMinutes = service.DurationInMinutes,
-                ImageUrl = service.ImageUrl,
-                Description = service.Description
-            };
+            var serviceViewModel = _mapper.Map<DetailServiceViewModel>(service);
 
-            return View(viewModel);
+            return View(serviceViewModel);
         }
     }
 }
