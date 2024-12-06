@@ -5,16 +5,18 @@ using NailStudioApp.Web.ViewModel.Appointment;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NailStudio.Data.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace NailStudioApp.Webb.Controllers
 {
     public class AppointmentController : Controller
     {
         private readonly NailDbContext _context;
-
-        public AppointmentController(NailDbContext context)
+        private readonly UserManager<User> _userManager;
+        public AppointmentController(NailDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -37,84 +39,166 @@ namespace NailStudioApp.Webb.Controllers
 
             return View(viewModel);
         }
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var users = await _context.Users
-                .Select(u => new SelectListItem
+            //var users = await _context.Users
+            //    .Select(u => new SelectListItem
+            //    {
+            //        Value = u.Id.ToString(),
+            //        //Text = u.Name
+            //    }).ToListAsync();
+
+            //var services = await _context.Services
+            //    .Select(s => new SelectListItem
+            //    {
+            //        Value = s.Id.ToString(),
+            //        Text = s.Name
+            //    }).ToListAsync();
+
+            //var staffMembers = await _context.StaffMembers
+            //    .Select(s => new SelectListItem
+            //    {
+            //        Value = s.Id.ToString(),
+            //        Text = s.Name
+            //    }).ToListAsync();
+
+            //var viewModel = new AddAppointmentViewModel
+            //{
+            //    Users = users,              
+            //    Services = services,         
+            //    StaffMembers = staffMembers 
+            //};
+
+            //return View(viewModel);
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");  // Redirect to login page if not authenticated
+            }
+
+            var userId = _userManager.GetUserId(User);  // Get the currently logged-in user ID
+            var user = await _userManager.FindByIdAsync(userId);
+
+            // Check if the user exists, handle the error case
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            // Prepare the select lists for Users, Services, and StaffMembers
+            var model = new AddAppointmentViewModel
+            {
+                UserId = user.Id,  // Pre-select the logged-in user as the UserId
+                Users = _context.Users.Select(u => new SelectListItem
                 {
                     Value = u.Id.ToString(),
-                    //Text = u.Name
-                }).ToListAsync();
+                    Text = u.Name
+                }).ToList(),
 
-            var services = await _context.Services
-                .Select(s => new SelectListItem
+                Services = _context.Services.Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
                     Text = s.Name
-                }).ToListAsync();
+                }).ToList(),
 
-            var staffMembers = await _context.StaffMembers
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToListAsync();
-
-            var viewModel = new AddAppointmentViewModel
-            {
-                Users = users,              
-                Services = services,         
-                StaffMembers = staffMembers 
+                StaffMembers = _context.Users.Where(u => u.Name != user.Name)  // Assuming staff are other users
+                    .Select(u => new SelectListItem
+                    {
+                        Value = u.Id.ToString(),
+                        Text = u.Name
+                    }).ToList()
             };
 
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AddAppointmentViewModel viewModel)
+        public async Task<IActionResult> Create(AddAppointmentViewModel model)
         {
+            //if (ModelState.IsValid)
+            //{
+            //    var appointment = new Appointment
+            //    {
+            //        UserId = viewModel.UserId,
+            //        ServiceId = viewModel.ServiceId,
+            //        AppointmentDate = viewModel.AppointmentDate,
+            //        StaffMemberId = viewModel.StaffMemberId
+            //    };
+
+            //    _context.Appointments.Add(appointment);
+            //    await _context.SaveChangesAsync();
+
+            //    return RedirectToAction("Index");
+            //}
+
+            //var users = await _context.Users
+            //    .Select(u => new SelectListItem
+            //    {
+            //        Value = u.Id.ToString(),
+            //        //Text = u.Name
+            //    }).ToListAsync();
+
+            //var services = await _context.Services
+            //    .Select(s => new SelectListItem
+            //    {
+            //        Value = s.Id.ToString(),
+            //        Text = s.Name
+            //    }).ToListAsync();
+
+            //var staffMembers = await _context.StaffMembers
+            //    .Select(s => new SelectListItem
+            //    {
+            //        Value = s.Id.ToString(),
+            //        Text = s.Name
+            //    }).ToListAsync();
+
+            //viewModel.Users = users;
+            //viewModel.Services = services;
+            //viewModel.StaffMembers = staffMembers;
+
+            //return View(viewModel);
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");  // Redirect to login page if not authenticated
+            }
+
             if (ModelState.IsValid)
             {
+                // Create the appointment
                 var appointment = new Appointment
                 {
-                    UserId = viewModel.UserId,
-                    ServiceId = viewModel.ServiceId,
-                    AppointmentDate = viewModel.AppointmentDate,
-                    StaffMemberId = viewModel.StaffMemberId
+                    UserId = model.UserId,
+                    ServiceId = model.ServiceId,
+                    AppointmentDate = model.AppointmentDate,
+                    //StaffMemberId = model.StaffMemberId
                 };
 
                 _context.Appointments.Add(appointment);
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index");  // Redirect to some appointment list or confirmation page
             }
 
-            var users = await _context.Users
-                .Select(u => new SelectListItem
-                {
-                    Value = u.Id.ToString(),
-                    //Text = u.Name
-                }).ToListAsync();
+            // If the model is not valid, reload the dropdowns and return the view again
+            model.Users = _context.Users.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Name
+            }).ToList();
 
-            var services = await _context.Services
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToListAsync();
+            model.Services = _context.Services.Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.Name
+            }).ToList();
 
-            var staffMembers = await _context.StaffMembers
-                .Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Name
-                }).ToListAsync();
+            model.StaffMembers = _context.Users.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Name
+            }).ToList();
 
-            viewModel.Users = users;
-            viewModel.Services = services;
-            viewModel.StaffMembers = staffMembers;
-
-            return View(viewModel);
+            return View(model);
         }
     }
 }

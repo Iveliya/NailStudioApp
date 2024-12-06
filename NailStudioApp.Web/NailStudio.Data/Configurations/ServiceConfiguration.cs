@@ -17,64 +17,67 @@ namespace NailStudio.Data.Configurations
 
             builder.Property(s => s.Name)
                    .IsRequired()
-                   .HasMaxLength(100); 
+                   .HasMaxLength(100);
 
             builder.Property(s => s.Price)
                    .IsRequired()
-                   .HasColumnType("decimal(18,2)");
+                   .HasColumnType("decimal(18,2)"); 
 
             builder.Property(s => s.DurationInMinutes)
                    .IsRequired();
 
             builder.Property(s => s.ImageUrl)
                    .IsRequired()
-                   .HasMaxLength(500); 
+                   .HasMaxLength(200); 
 
             builder.Property(s => s.Description)
                    .IsRequired()
                    .HasMaxLength(500); 
 
+            builder.Property(s => s.IsDeleted)
+                   .IsRequired();
+
             builder.HasMany(s => s.Appointments)
                    .WithOne(a => a.Service)
                    .HasForeignKey(a => a.ServiceId)
-                   .OnDelete(DeleteBehavior.Restrict); 
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasMany(s => s.UserServices)
                    .WithOne(us => us.Service)
                    .HasForeignKey(us => us.ServiceId)
-                   .OnDelete(DeleteBehavior.Cascade); 
+                   .OnDelete(DeleteBehavior.Cascade);
 
-           
-            builder.HasData(this.SeedServices());
-        }
+            builder.HasQueryFilter(s => !s.IsDeleted);
+
+             builder.HasData(SeedServices()); }
 
         private List<Service> SeedServices()
         {
-            List<Service> services = new List<Service>()
-            {
-                new Service()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Manicure",
-                    Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
-                    Price = 25.00m,
-                    DurationInMinutes = 45, // 45 minutes
-                    ImageUrl = "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg"
-                },
-                new Service()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Pedicure",
-                    Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
-                    Price = 35.00m,
-                    DurationInMinutes = 60, // 1 hour
-                    ImageUrl = "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg"
-                }
-            };
-
-            return services;
+            return new List<Service>
+             {
+                 new Service
+                 {
+                     Id = Guid.NewGuid(),
+                     Name = "Manicure",
+                     Price = 30.00m,
+                     DurationInMinutes = 60,
+                     ImageUrl = "https://example.com/images/manicure.jpg",
+                     Description = "A professional manicure service.",
+                     IsDeleted = false
+                 },
+                 new Service
+                 {
+                     Id = Guid.NewGuid(),
+                     Name = "Pedicure",
+                     Price = 50.00m,
+                     DurationInMinutes = 75,
+                     ImageUrl = "https://example.com/images/pedicure.jpg",
+                     Description = "A relaxing pedicure service.",
+                     IsDeleted = false
+                 }
+             };
         }
 
-      
+
     }
 }

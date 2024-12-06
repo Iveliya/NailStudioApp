@@ -19,37 +19,47 @@ namespace NailStudio.Data.Configurations
                    .IsRequired()
                    .HasMaxLength(100); 
 
-            builder.Property(sm => sm.Specialization)
+            builder.Property(sm => sm.Role)
                    .IsRequired()
-                   .HasMaxLength(100); 
+                   .HasMaxLength(50);
+
+            builder.Property(sm => sm.IsDeleted)
+                   .IsRequired();
 
             builder.HasMany(sm => sm.Appointments)
                    .WithOne(a => a.StaffMember)
                    .HasForeignKey(a => a.StaffMemberId)
-                   .OnDelete(DeleteBehavior.SetNull);
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(sm => sm.Schedules)
+                   .WithOne(s => s.StaffMember)
+                   .HasForeignKey(s => s.StaffMemberId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(sm => !sm.IsDeleted);
 
             builder.HasData(this.SeedStaffMembers());
         }
 
         private List<StaffMember> SeedStaffMembers()
         {
-            List<StaffMember> staffMembers = new List<StaffMember>()
-            {
-                new StaffMember()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "John Doe",
-                    Specialization = "Manicure"
-                },
-                new StaffMember()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Jane Smith",
-                    Specialization = "Pedicure"
-                }
-            };
-
-            return staffMembers;
+            return new List<StaffMember>
+             {
+                 new StaffMember
+                 {
+                     Id = Guid.NewGuid(),
+                     Name = "John Doe",
+                     Role = "Nail Technician",
+                     IsDeleted = false
+                 },
+                 new StaffMember
+                 {
+                     Id = Guid.NewGuid(),
+                     Name = "Jane Smith",
+                     Role = "Manager",
+                     IsDeleted = false
+                 }
+             };
         }
     }
 }

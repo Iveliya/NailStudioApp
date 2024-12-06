@@ -18,12 +18,18 @@ namespace NailStudio.Data.Configurations
             builder.HasOne(us => us.User)
                    .WithMany(u => u.UserServices)
                    .HasForeignKey(us => us.UserId)
-                   .OnDelete(DeleteBehavior.Cascade); 
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(us => us.Service)
                    .WithMany(s => s.UserServices)
                    .HasForeignKey(us => us.ServiceId)
-                   .OnDelete(DeleteBehavior.Cascade); 
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(us => us.IsDeleted)
+                   .IsRequired();
+
+            builder.HasQueryFilter(us => !us.IsDeleted);
+
 
             //builder.HasData(SeedUserServices());
         }

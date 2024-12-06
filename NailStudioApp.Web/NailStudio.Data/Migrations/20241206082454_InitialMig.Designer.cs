@@ -12,8 +12,8 @@ using NailStudio.Data;
 namespace NailStudio.Data.Migrations
 {
     [DbContext(typeof(NailDbContext))]
-    [Migration("20241204101537_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241206082454_InitialMig")]
+    partial class InitialMig
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,10 +165,13 @@ namespace NailStudio.Data.Migrations
                     b.Property<DateTime>("AppointmentDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("ServiceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("StaffMemberId")
+                    b.Property<Guid>("StaffMemberId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -183,6 +186,66 @@ namespace NailStudio.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rating")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Schedule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("StaffMemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StaffMemberId");
+
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("NailStudio.Data.Models.Service", b =>
@@ -201,8 +264,11 @@ namespace NailStudio.Data.Migrations
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -219,21 +285,23 @@ namespace NailStudio.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ddd660a6-8588-4124-9e11-7e8928a3d1ab"),
-                            Description = "A relaxing manicure session including nail shaping, cuticle care, and polish application.",
-                            DurationInMinutes = 45,
-                            ImageUrl = "https://globalfashion.ru/images/blog/articles/oTLr0HS5G1IwBsDaZemFzRQ22QUCKzMIVCgKL6Iw.jpg",
+                            Id = new Guid("861584ff-696c-4bdb-99d1-f0122bd7c7d4"),
+                            Description = "A professional manicure service.",
+                            DurationInMinutes = 60,
+                            ImageUrl = "https://example.com/images/manicure.jpg",
+                            IsDeleted = false,
                             Name = "Manicure",
-                            Price = 25.00m
+                            Price = 30.00m
                         },
                         new
                         {
-                            Id = new Guid("dd782107-e3b7-4cb2-9e26-8f9c2c581c2d"),
-                            Description = "A soothing pedicure with foot soak, exfoliation, nail shaping, and polish.",
-                            DurationInMinutes = 60,
-                            ImageUrl = "https://blog.globalfashion.pro/ua/articles/IIIexSx2c6IDfVtXwTellmCrXEJVZITNlQpoR4Vs.jpg",
+                            Id = new Guid("08682358-04f8-4442-9d96-cf15fdd62f48"),
+                            Description = "A relaxing pedicure service.",
+                            DurationInMinutes = 75,
+                            ImageUrl = "https://example.com/images/pedicure.jpg",
+                            IsDeleted = false,
                             Name = "Pedicure",
-                            Price = 35.00m
+                            Price = 50.00m
                         });
                 });
 
@@ -243,15 +311,18 @@ namespace NailStudio.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Specialization")
+                    b.Property<string>("Role")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -260,15 +331,17 @@ namespace NailStudio.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("74da0a73-2f71-464c-8edc-f2e8910e0ac7"),
+                            Id = new Guid("f3798ddb-b639-4ba2-9067-e34157dcaa5d"),
+                            IsDeleted = false,
                             Name = "John Doe",
-                            Specialization = "Manicure"
+                            Role = "Nail Technician"
                         },
                         new
                         {
-                            Id = new Guid("9f6d5cd4-a5b6-4c6e-85f9-af9b132e1e0c"),
+                            Id = new Guid("7e7eab53-4ff9-438e-8362-eee5bde85e7e"),
+                            IsDeleted = false,
                             Name = "Jane Smith",
-                            Specialization = "Pedicure"
+                            Role = "Manager"
                         });
                 });
 
@@ -290,6 +363,9 @@ namespace NailStudio.Data.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
@@ -350,6 +426,9 @@ namespace NailStudio.Data.Migrations
 
                     b.Property<Guid>("ServiceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.HasKey("UserId", "ServiceId");
 
@@ -414,13 +493,14 @@ namespace NailStudio.Data.Migrations
                     b.HasOne("NailStudio.Data.Models.Service", "Service")
                         .WithMany("Appointments")
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("NailStudio.Data.Models.StaffMember", "StaffMember")
                         .WithMany("Appointments")
                         .HasForeignKey("StaffMemberId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NailStudio.Data.Models.User", "User")
                         .WithMany("Appointments")
@@ -433,6 +513,28 @@ namespace NailStudio.Data.Migrations
                     b.Navigation("StaffMember");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Review", b =>
+                {
+                    b.HasOne("NailStudio.Data.Models.User", "User")
+                        .WithMany("Reviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Schedule", b =>
+                {
+                    b.HasOne("NailStudio.Data.Models.StaffMember", "StaffMember")
+                        .WithMany("Schedules")
+                        .HasForeignKey("StaffMemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("StaffMember");
                 });
 
             modelBuilder.Entity("NailStudio.Data.Models.UserService", b =>
@@ -464,11 +566,15 @@ namespace NailStudio.Data.Migrations
             modelBuilder.Entity("NailStudio.Data.Models.StaffMember", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Schedules");
                 });
 
             modelBuilder.Entity("NailStudio.Data.Models.User", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Reviews");
 
                     b.Navigation("UserServices");
                 });

@@ -14,6 +14,8 @@ namespace NailStudio.Data.Models
         public int DurationInMinutes { get; set; }
         public string ImageUrl { get; set; } = null!;
         public string Description { get; set; } = null!;
+        public bool IsDeleted { get; set; } = false;
+
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public ICollection<UserService> UserServices { get; set; } = new List<UserService>();
 

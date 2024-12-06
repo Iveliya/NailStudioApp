@@ -12,8 +12,14 @@ namespace NailStudio.Data.Configurations
     public class AppointmentConfguration : IEntityTypeConfiguration<Appointment>
     {
         public void Configure(EntityTypeBuilder<Appointment> builder)
-        {
+        { 
             builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.AppointmentDate)
+                   .IsRequired();
+
+            builder.Property(a => a.IsDeleted)
+                   .IsRequired();
 
             builder.HasOne(a => a.User)
                    .WithMany(u => u.Appointments)
@@ -23,18 +29,16 @@ namespace NailStudio.Data.Configurations
             builder.HasOne(a => a.Service)
                    .WithMany(s => s.Appointments)
                    .HasForeignKey(a => a.ServiceId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(a => a.StaffMember)
                    .WithMany(sm => sm.Appointments)
                    .HasForeignKey(a => a.StaffMemberId)
-                   .OnDelete(DeleteBehavior.SetNull);
+                   .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Property(a => a.AppointmentDate)
-                   .IsRequired();
+            builder.HasQueryFilter(a => !a.IsDeleted);
 
-            //builder.HasData(this.SeedAppointments());
-        }
+             }
 
         //private List<Appointment> SeedAppointments()
         //{

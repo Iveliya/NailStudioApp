@@ -13,9 +13,14 @@ namespace NailStudio.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
+            builder.HasKey(u => u.Id);
+
             builder.Property(u => u.Name)
                    .IsRequired()
                    .HasMaxLength(100);
+
+            builder.Property(u => u.IsDeleted)
+                   .IsRequired();
 
             builder.HasMany(u => u.Appointments)
                    .WithOne(a => a.User)
@@ -26,6 +31,14 @@ namespace NailStudio.Data.Configurations
                    .WithOne(us => us.User)
                    .HasForeignKey(us => us.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(u => u.Reviews)
+                   .WithOne(r => r.User)
+                   .HasForeignKey(r => r.UserId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(u => !u.IsDeleted);
+
 
             //builder.HasData(SeedUsers());
         }
