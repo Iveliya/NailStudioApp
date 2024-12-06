@@ -78,6 +78,7 @@ namespace NailStudio.Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Role = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PhotoUrl = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -299,17 +300,17 @@ namespace NailStudio.Data.Migrations
                 columns: new[] { "Id", "Description", "DurationInMinutes", "ImageUrl", "IsDeleted", "Name", "Price" },
                 values: new object[,]
                 {
-                    { new Guid("08682358-04f8-4442-9d96-cf15fdd62f48"), "A relaxing pedicure service.", 75, "https://example.com/images/pedicure.jpg", false, "Pedicure", 50.00m },
-                    { new Guid("861584ff-696c-4bdb-99d1-f0122bd7c7d4"), "A professional manicure service.", 60, "https://example.com/images/manicure.jpg", false, "Manicure", 30.00m }
+                    { new Guid("363e9fab-4599-4972-925e-569124ec2f2d"), "A relaxing pedicure service.", 75, "https://example.com/images/pedicure.jpg", false, "Pedicure", 50.00m },
+                    { new Guid("842748b9-bfd5-4411-affe-b744bf0799b3"), "A professional manicure service.", 60, "https://example.com/images/manicure.jpg", false, "Manicure", 30.00m }
                 });
 
             migrationBuilder.InsertData(
                 table: "StaffMembers",
-                columns: new[] { "Id", "IsDeleted", "Name", "Role" },
+                columns: new[] { "Id", "IsDeleted", "Name", "PhotoUrl", "Role" },
                 values: new object[,]
                 {
-                    { new Guid("7e7eab53-4ff9-438e-8362-eee5bde85e7e"), false, "Jane Smith", "Manager" },
-                    { new Guid("f3798ddb-b639-4ba2-9067-e34157dcaa5d"), false, "John Doe", "Nail Technician" }
+                    { new Guid("72cec1bf-dab5-4e14-aaab-8d7818ec0812"), false, "Anna Rose", "https://www.flagman.bg/news/2024/10/30/173027983811467.png", "Nail Technician" },
+                    { new Guid("ff5c5e27-fc45-4921-bb6f-cb797aff6dad"), false, "Jane Smith", "https://visages.net/wp-content/uploads/2022/06/dsc_3716.jpg", "Manager" }
                 });
 
             migrationBuilder.CreateIndex(

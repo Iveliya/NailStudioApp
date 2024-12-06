@@ -23,6 +23,10 @@ namespace NailStudio.Data.Configurations
                    .IsRequired()
                    .HasMaxLength(50);
 
+            builder.Property(sm => sm.PhotoUrl)
+                .IsRequired()
+                .HasMaxLength(500);
+
             builder.Property(sm => sm.IsDeleted)
                    .IsRequired();
 
@@ -48,8 +52,9 @@ namespace NailStudio.Data.Configurations
                  new StaffMember
                  {
                      Id = Guid.NewGuid(),
-                     Name = "John Doe",
+                     Name = "Anna Rose",
                      Role = "Nail Technician",
+                     PhotoUrl="https://www.flagman.bg/news/2024/10/30/173027983811467.png",
                      IsDeleted = false
                  },
                  new StaffMember
@@ -57,6 +62,7 @@ namespace NailStudio.Data.Configurations
                      Id = Guid.NewGuid(),
                      Name = "Jane Smith",
                      Role = "Manager",
+                     PhotoUrl="https://visages.net/wp-content/uploads/2022/06/dsc_3716.jpg",
                      IsDeleted = false
                  }
              };

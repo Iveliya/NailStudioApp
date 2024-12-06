@@ -282,7 +282,7 @@ namespace NailStudio.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("861584ff-696c-4bdb-99d1-f0122bd7c7d4"),
+                            Id = new Guid("842748b9-bfd5-4411-affe-b744bf0799b3"),
                             Description = "A professional manicure service.",
                             DurationInMinutes = 60,
                             ImageUrl = "https://example.com/images/manicure.jpg",
@@ -292,7 +292,7 @@ namespace NailStudio.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("08682358-04f8-4442-9d96-cf15fdd62f48"),
+                            Id = new Guid("363e9fab-4599-4972-925e-569124ec2f2d"),
                             Description = "A relaxing pedicure service.",
                             DurationInMinutes = 75,
                             ImageUrl = "https://example.com/images/pedicure.jpg",
@@ -316,6 +316,11 @@ namespace NailStudio.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("PhotoUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -328,16 +333,18 @@ namespace NailStudio.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f3798ddb-b639-4ba2-9067-e34157dcaa5d"),
+                            Id = new Guid("72cec1bf-dab5-4e14-aaab-8d7818ec0812"),
                             IsDeleted = false,
-                            Name = "John Doe",
+                            Name = "Anna Rose",
+                            PhotoUrl = "https://www.flagman.bg/news/2024/10/30/173027983811467.png",
                             Role = "Nail Technician"
                         },
                         new
                         {
-                            Id = new Guid("7e7eab53-4ff9-438e-8362-eee5bde85e7e"),
+                            Id = new Guid("ff5c5e27-fc45-4921-bb6f-cb797aff6dad"),
                             IsDeleted = false,
                             Name = "Jane Smith",
+                            PhotoUrl = "https://visages.net/wp-content/uploads/2022/06/dsc_3716.jpg",
                             Role = "Manager"
                         });
                 });

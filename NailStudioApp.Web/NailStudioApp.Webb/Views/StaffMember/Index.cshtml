@@ -1,0 +1,20 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.StaffMember.StaffMemberIndexViewModel>
+
+<div class="container mt-4">
+    <h1>Staff Members</h1>
+    <a class="btn btn-primary mb-3" href="/StaffMember/Add">Add Staff Member</a>
+    <div class="row">
+        @foreach (var staff in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@staff.PhotoUrl" class="card-img-top" alt="@staff.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@staff.Name</h5>
+                        <p class="card-text">@staff.Role</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

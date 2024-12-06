@@ -17,6 +17,7 @@ namespace NailStudioApp.Webb
     using NailStudioApp.Services.Data;
     using NailStudioApp.Services.Data.Interfaces;
     using NailStudioApp.Services.Mapping.Mapping;
+    using NailStudioApp.Services.Mapping.Mapping;
     using NailStudioApp.Web.ViewModel.Service;
     using NailStudioApp.Webb.Models;
     using Services.Mapping;
@@ -75,7 +76,14 @@ namespace NailStudioApp.Webb
             builder.Services.RegisterRepositories(typeof(User).Assembly);
 
             builder.Services.AddAutoMapper(typeof(ServiceMappingProfile));
-              
+            builder.Services.AddAutoMapper(typeof(StaffMemberMappingProfile));
+
+            //builder.Services.AddScoped<IStaffMemberService, StaffMemberService>();
+            //var config = new MapperConfiguration(cfg => {
+            //    cfg.AddProfile<StaffMemberMappingProfile>();
+            //});
+            //config.AssertConfigurationIsValid();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
