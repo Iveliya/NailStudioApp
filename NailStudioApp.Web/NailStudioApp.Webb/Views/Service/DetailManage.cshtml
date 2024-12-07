@@ -1,0 +1,33 @@
+﻿@model NailStudioApp.Web.ViewModel.Service.DetailServiceViewModel
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-primary text-white rounded-top">
+            <h3 class="text-center mb-0">@Model.Name</h3>
+        </div>
+        <div class="card-body p-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="@Model.ImageUrl" class="img-fluid rounded-3 mb-3 shadow-sm" alt="@Model.Name" />
+                </div>
+                <div class="col-md-6">
+                    <p class="fs-5 text-muted"><strong>Price:</strong> @Model.Price.ToString("C")</p>
+                    <p class="fs-5 text-muted"><strong>Duration:</strong> @Model.DurationInMinutes minutes</p>
+                    <p class="fs-5 text-muted"><strong>Description:</strong> @Model.Description</p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+
+                <a href="/Service/Manage" class="btn btn-outline-secondary btn-lg shadow-lg px-4 py-2">
+                    <i class="bi bi-arrow-left-circle me-2"></i> Back to Services
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

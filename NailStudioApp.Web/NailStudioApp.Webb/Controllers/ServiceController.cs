@@ -8,9 +8,11 @@ using NailStudio.Data.Repository.Interfaces;
 using NailStudioApp.Services.Data;
 using NailStudioApp.Services.Data.Interfaces;
 using NailStudioApp.Web.ViewModel.Service;
+using NuGet.Protocol.Core.Types;
 
 namespace NailStudioApp.Webb.Controllers
 {
+    using NailStudioApp.Web.ViewModel.Service;
     public class ServiceController : Controller
     {
         private readonly NailDbContext _context;
@@ -25,20 +27,6 @@ namespace NailStudioApp.Webb.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //IEnumerable<ServiceIndexViewModel> services = await _context.Services
-            // .Select(s => new ServiceIndexViewModel
-            // {
-            //     Id = s.Id,
-            //     Name = s.Name,
-            //     Price = s.Price,
-            //     DurationInMinutes = s.DurationInMinutes,
-            //     ImageUrl = s.ImageUrl,
-            // })
-            // .ToListAsync();
-            //IEnumerable<ServiceIndexViewModel> services=
-            //await this.serviceService.IndexGetAllOrderedAsync();
-            //return View(services);
-
 
             var serviceViewModels = await _context.Services
         .ProjectTo<ServiceIndexViewModel>(_mapper.ConfigurationProvider)
@@ -46,6 +34,26 @@ namespace NailStudioApp.Webb.Controllers
 
             return View(serviceViewModels);
 
+        }
+        [HttpGet]
+        public IActionResult AddManage()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddManage(AddServiceFormModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var service = _mapper.Map<Service>(model);
+
+                await _context.Services.AddAsync(service);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Manage");
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -57,26 +65,6 @@ namespace NailStudioApp.Webb.Controllers
         [HttpPost]
         public async Task<IActionResult> AddService(AddServiceFormModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    var service = new Service
-            //    {
-            //        Name = model.Name,
-            //        Price = model.Price,
-            //        DurationInMinutes = model.DurationInMinutes,
-            //        ImageUrl = model.ImageUrl,
-            //        Description = model.Description
-            //    };
-
-            //    await _context.Services.AddAsync(service);
-            //    await _context.SaveChangesAsync();
-
-            //    return RedirectToAction("Index");
-            //}
-
-            //return View(model);
-
-
             if (ModelState.IsValid)
             {
                 var service = _mapper.Map<Service>(model);
@@ -93,24 +81,7 @@ namespace NailStudioApp.Webb.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(Guid id)
         {
-            //var service = await _context.Services.FindAsync(id);
-
-            //if (service == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //DetailServiceViewModel viewModel = new DetailServiceViewModel
-            //{
-            //    Id = service.Id,
-            //    Name = service.Name,
-            //    Price = service.Price,
-            //    DurationInMinutes = service.DurationInMinutes,
-            //    ImageUrl = service.ImageUrl,
-            //    Description = service.Description
-            //};
-
-            //return View(viewModel);
+            
 
 
             var service = await _context.Services
@@ -125,6 +96,116 @@ namespace NailStudioApp.Webb.Controllers
             var serviceViewModel = _mapper.Map<DetailServiceViewModel>(service);
 
             return View(serviceViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailManage(Guid id)
+        {
+            var service = await _context.Services
+        .Where(s => s.Id == id)
+        .FirstOrDefaultAsync();
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            var serviceViewModel = _mapper.Map<DetailServiceViewModel>(service);
+
+            return View(serviceViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Manage()
+        {
+            var services = await _context.Services
+                .ProjectTo<ServiceIndexViewModel>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return View(services);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            
+            var service = await _context.Services
+           .Where(s => s.Id == id && !s.IsDeleted) 
+           .FirstOrDefaultAsync();
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            var serviceViewModel = _mapper.Map<ServiceEditFormModel>(service);
+            return View(serviceViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, ServiceEditFormModel model)
+        {
+            
+            if (id != model.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var service = await _context.Services
+                    .Where(s => s.Id == id && !s.IsDeleted) 
+                    .FirstOrDefaultAsync();
+
+                if (service == null)
+                {
+                    return NotFound();
+                }
+
+                _mapper.Map(model, service);
+                _context.Services.Update(service);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Manage));
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var service = await _context.Services
+                .Where(s => s.Id == id && !s.IsDeleted) 
+                .FirstOrDefaultAsync();
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            var serviceViewModel = _mapper.Map<ServiceEditFormModel>(service);
+            return View(serviceViewModel);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var service = await _context.Services
+                .Where(s => s.Id == id && !s.IsDeleted)
+                .FirstOrDefaultAsync();
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            service.IsDeleted = true;
+
+            _context.Services.Update(service); 
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Manage));
         }
     }
 }

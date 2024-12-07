@@ -27,11 +27,6 @@ namespace NailStudioApp.Services.Data
 
         public async Task<IEnumerable<StaffMemberIndexViewModel>> GetAllStaffMembersAsync()
         {
-            //return await this.staffRepository
-            //    .All()
-            //    .OrderBy(sm => sm.Name)
-            //    .To<StaffMemberIndexViewModel>()
-            //    .ToListAsync();
 
             IEnumerable<StaffMemberIndexViewModel> staffMembers = await this.staffRepository
                 .GetAllAttached()

@@ -5,17 +5,16 @@ using Microsoft.EntityFrameworkCore;
 using NailStudio.Data;
 using NailStudio.Data.Models;
 using NailStudioApp.Services.Data.Interfaces;
+using NailStudioApp.Web.ViewModel.Review;
 using NailStudioApp.Web.ViewModel.Service;
-using NailStudioApp.Web.ViewModel.StaffMember;
 
 namespace NailStudioApp.Webb.Controllers
 {
-    public class StaffMemberController : Controller
+    public class ReviewController : Controller
     {
-        
         private readonly NailDbContext _context;
         private readonly IMapper _mapper;
-        public StaffMemberController(NailDbContext context, IMapper mapper)
+        public ReviewController(NailDbContext context, IMapper mapper)
         {
             _context = context;
             this._mapper = mapper;
@@ -24,11 +23,13 @@ namespace NailStudioApp.Webb.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var staffMemberViewModel = await _context.StaffMembers
-        .ProjectTo<StaffMemberIndexViewModel>(_mapper.ConfigurationProvider)
+            //var reviews = await this.reviewService.GetAllReviewsAsync();
+            //return View(reviews);
+            var reviewViewModels = await _context.Reviews
+        .ProjectTo<IndexReviewViewModel>(_mapper.ConfigurationProvider)
         .ToListAsync();
 
-            return View(staffMemberViewModel);
+            return View(reviewViewModels);
         }
 
         [HttpGet]
@@ -38,16 +39,20 @@ namespace NailStudioApp.Webb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddStaffMemberFormModel model)
+        public async Task<IActionResult> Add(AddReviewViewModel model)
         {
-           
+            //if (ModelState.IsValid)
+            //{
+            //    await this.reviewService.AddReviewAsync(model);
+            //    return RedirectToAction("Index");
+            //}
 
-
+            //return View(model);
             if (ModelState.IsValid)
             {
-                var staffMember = _mapper.Map<StaffMember>(model);
+                var review = _mapper.Map<Review>(model);
 
-                await _context.StaffMembers.AddAsync(staffMember);
+                await _context.Reviews.AddAsync(review);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index");
@@ -55,6 +60,5 @@ namespace NailStudioApp.Webb.Controllers
 
             return View(model);
         }
-
     }
 }

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Review.IndexReviewViewModel>
+
+<div class="container mt-4">
+    <h1>Customer Reviews</h1>
+    <a class="btn btn-primary mb-3" href="/Review/Add">Add a Review</a>
+    <div class="row">
+        @foreach (var review in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@review.UserName</h5>
+                        <p class="card-text">@review.Content</p>
+                        <p class="text-muted">Rating: @review.Rating</p>
+                        <p class="text-muted">@review.Date.ToShortDateString()</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

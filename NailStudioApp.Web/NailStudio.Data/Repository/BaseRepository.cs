@@ -8,6 +8,8 @@ namespace NailStudio.Data.Repository
 {
     using Interfaces;
     using Microsoft.EntityFrameworkCore;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+    using System.Linq;
 
     public class BaseRepository<TType, TId> : IRepository<TType, TId>
         where TType : class
@@ -35,36 +37,82 @@ namespace NailStudio.Data.Repository
 
         public bool Delete(TId id)
         {
-            TType entity=this.GetById(id);
+            //TType entity=this.GetById(id);
+            //if (entity == null)
+            //{
+            //    return false;
+            //}
+            //this.dbSet.Remove(entity);
+            //this.dbContext.SaveChanges();
+            //return true;
+            TType entity = this.GetById(id);
             if (entity == null)
             {
                 return false;
             }
-            this.dbSet.Remove(entity);
+
+            if (typeof(TType).GetProperty("IsDeleted") != null)
+            {
+                typeof(TType).GetProperty("IsDeleted")?.SetValue(entity, true);
+                this.dbContext.Entry(entity).State = EntityState.Modified;
+            }
+            else
+            {
+                this.dbSet.Remove(entity);
+            }
+
             this.dbContext.SaveChanges();
             return true;
         }
 
         public async Task<bool> DeleteAsync(TId id)
         {
-            TType entity=await this.GetByIdAsync(id);
-            if(entity == null)
+            //TType entity=await this.GetByIdAsync(id);
+            //if(entity == null)
+            //{
+            //    return false;
+            //}
+            //this.dbSet.Remove(entity);
+            //await this.dbContext.SaveChangesAsync();
+            //return true;
+            TType entity = await this.GetByIdAsync(id);
+            if (entity == null)
             {
                 return false;
             }
-            this.dbSet.Remove(entity);
+
+            if (typeof(TType).GetProperty("IsDeleted") != null)
+            {
+                typeof(TType).GetProperty("IsDeleted")?.SetValue(entity, true);
+                this.dbContext.Entry(entity).State = EntityState.Modified;
+            }
+            else
+            {
+                this.dbSet.Remove(entity);
+            }
+
             await this.dbContext.SaveChangesAsync();
             return true;
         }
-        //public IQueryable<TType> GetAll()
-        //{
-        //    return dbSet.AsQueryable();
-        //}
+
         public IQueryable<TType> All()
         {
-            return dbSet.AsQueryable();  
+            //return dbSet.AsQueryable();
+            var query = this.dbSet.AsQueryable();
+
+            var isDeletedProperty = typeof(TType).GetProperty("IsDeleted");
+            if (isDeletedProperty != null)
+            {
+                query = query.Where(e => !(bool)isDeletedProperty.GetValue(e));
+            }
+
+            return query;
         }
 
+        public IQueryable<TType> AllWithDeleted()
+        {
+            return this.dbSet.AsQueryable(); 
+        }
 
         public IEnumerable<TType> GetAll()
         {

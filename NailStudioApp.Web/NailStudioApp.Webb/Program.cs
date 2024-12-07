@@ -77,6 +77,7 @@ namespace NailStudioApp.Webb
 
             builder.Services.AddAutoMapper(typeof(ServiceMappingProfile));
             builder.Services.AddAutoMapper(typeof(StaffMemberMappingProfile));
+            builder.Services.AddAutoMapper(typeof(ReviewMappingProfile));
 
             //builder.Services.AddScoped<IStaffMemberService, StaffMemberService>();
             //var config = new MapperConfiguration(cfg => {

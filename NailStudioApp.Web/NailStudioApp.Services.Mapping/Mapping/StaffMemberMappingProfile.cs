@@ -14,7 +14,6 @@ namespace NailStudioApp.Services.Mapping.Mapping
         public StaffMemberMappingProfile()
         {
             CreateMap<StaffMember, StaffMemberIndexViewModel>();
-            //CreateMap<StaffMember, DetailStaffMemberViewModel>();
             CreateMap<AddStaffMemberFormModel, StaffMember>()
                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }

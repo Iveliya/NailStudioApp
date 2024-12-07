@@ -1,0 +1,38 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Service.ServiceIndexViewModel>
+
+@{
+    ViewData["Title"] = "Manage Services";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Manage Services</h2>
+        <a href="/Service/AddManage" class="btn btn-success">Add New Service</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var service in Model)
+            {
+                <tr>
+                    <td>@service.Name</td>
+                    <td>@service.Price.ToString("C")</td>
+                    <td>@service.DurationInMinutes minutes</td>
+                    <td>
+                        <a href="/Service/DetailManage/@service.Id" class="btn btn-info btn-sm">Details</a>
+                        <a href="/Service/Edit/@service.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="/Service/Delete/@service.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

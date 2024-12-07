@@ -1,0 +1,19 @@
+﻿@model NailStudioApp.Web.ViewModel.Review.AddReviewViewModel
+
+<div class="container mt-4">
+    <h1>Add a Review</h1>
+    <form asp-action="Add" method="post">
+        <div class="form-group">
+            <label asp-for="Content"></label>
+            <textarea asp-for="Content" class="form-control"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Rating"></label>
+            <input asp-for="Rating" type="number" min="1" max="5" class="form-control" />
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+

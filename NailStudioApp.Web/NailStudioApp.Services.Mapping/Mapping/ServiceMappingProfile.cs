@@ -15,7 +15,7 @@ namespace NailStudioApp.Services.Mapping.Mapping
         {
             CreateMap<Service, ServiceIndexViewModel>();
             CreateMap<Service, DetailServiceViewModel>();
-
+            CreateMap<Service, ServiceEditFormModel>().ReverseMap();
             CreateMap<AddServiceFormModel, Service>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
         }

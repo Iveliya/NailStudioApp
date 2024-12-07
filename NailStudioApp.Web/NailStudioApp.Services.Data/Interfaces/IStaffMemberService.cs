@@ -11,6 +11,5 @@ namespace NailStudioApp.Services.Data.Interfaces
     {
         Task<IEnumerable<StaffMemberIndexViewModel>> GetAllStaffMembersAsync();
         Task AddStaffMemberAsync(AddStaffMemberFormModel model);
-        //Task<DetailStaffMemberViewModel> GetStaffMemberByIdAsync(Guid id);
     }
 }

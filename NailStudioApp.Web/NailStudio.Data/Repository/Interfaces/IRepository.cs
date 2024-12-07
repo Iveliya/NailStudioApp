@@ -10,6 +10,7 @@ namespace NailStudio.Data.Repository.Interfaces
     {
         //IQueryable<TType> GetAll();
         IQueryable<TType> All();
+        IQueryable<TType> AllWithDeleted();
         IEnumerable<TType> GetAll();
         Task<IEnumerable<TType>> GetAllAsync();
 
@@ -26,6 +27,7 @@ namespace NailStudio.Data.Repository.Interfaces
 
         bool Delete(TId id);
         Task<bool> DeleteAsync(TId id);
+
 
         Task SaveChangesAsync();
         IEnumerable<object> GetAllAtach();
