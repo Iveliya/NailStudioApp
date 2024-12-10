@@ -10,7 +10,7 @@ namespace NailStudioApp.Services.Mapping
     using System.Reflection;
     using AutoMapper;
     using AutoMapper.Configuration.Conventions;
-    using NailStudioApp.Services.Mapping.Mapping;
+    //using NailStudioApp.Services.Mapping.Mapping;
 
     public class AutoMapperConfig
     {

@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Volo.Abp.ObjectMapping" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data.Models\NailStudio.Data.Models.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,10 +5,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data.Models\NailStudio.Data.Models.csproj" />
+    <ProjectReference Include="..\NailStudio.Data\NailStudio.Data.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Web.ViewModel\NailStudioApp.Web.ViewModel.csproj" />
   </ItemGroup>
+
 </Project>

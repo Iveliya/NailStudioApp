@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.11" />
@@ -29,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data\NailStudio.Data.csproj" />
     <ProjectReference Include="..\NailStudioApp.Common\NailStudioApp.Common.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Service.MappingProfile\NailStudioApp.Service.MappingProfile.csproj" />
     <ProjectReference Include="..\NailStudioApp.Services.Data\NailStudioApp.Services.Data.csproj" />
     <ProjectReference Include="..\NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj" />
     <ProjectReference Include="..\NailStudioApp.Web.Infrastruction\NailStudioApp.Web.Infrastruction.csproj" />
@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Mappings\" />
   </ItemGroup>
 

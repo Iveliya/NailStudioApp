@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NailStudioApp.Services.Mapping.Mapping
+namespace NailStudioApp.Service.MappingProfile
 {
     public class ReviewMappingProfile:Profile
     {

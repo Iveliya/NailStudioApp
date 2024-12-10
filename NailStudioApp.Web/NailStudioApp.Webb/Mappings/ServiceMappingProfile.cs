@@ -4,8 +4,10 @@ using NailStudioApp.Web.ViewModel.Service;
 
 namespace NailStudioApp.Webb.Mappings
 {
+    using NailStudio.Data.Models;
     public class ServiceMappingProfile:Profile
     {
+        
         public ServiceMappingProfile()
         {
             CreateMap<Service, ServiceIndexViewModel>()

@@ -14,10 +14,11 @@ namespace NailStudioApp.Webb
     using AutoMapper;
     using NailStudio.Data.Repository;
     using NailStudio.Data.Repository.Interfaces;
+    using NailStudioApp.Service.MappingProfile;
     using NailStudioApp.Services.Data;
     using NailStudioApp.Services.Data.Interfaces;
-    using NailStudioApp.Services.Mapping.Mapping;
-    using NailStudioApp.Services.Mapping.Mapping;
+    //using NailStudioApp.Services.Mapping.Mapping;
+    //using NailStudioApp.Services.Mapping.Mapping;
     using NailStudioApp.Web.ViewModel.Service;
     using NailStudioApp.Webb.Models;
     using Services.Mapping;
@@ -82,7 +83,9 @@ namespace NailStudioApp.Webb
             builder.Services.AddAutoMapper(typeof(ServiceMappingProfile));
             builder.Services.AddAutoMapper(typeof(StaffMemberMappingProfile));
             builder.Services.AddAutoMapper(typeof(ReviewMappingProfile));
-            
+            builder.Services.AddScoped<IUserService, UserService>();
+
+
             //builder.Services.AddScoped<IStaffMemberService, StaffMemberService>();
             //var config = new MapperConfiguration(cfg => {
             //    cfg.AddProfile<StaffMemberMappingProfile>();

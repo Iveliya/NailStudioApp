@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using NailStudio.Data.Models;
 using NailStudioApp.Web.ViewModel.Service;
 using System;
 using System.Collections.Generic;
@@ -7,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NailStudioApp.Services.Mapping.Mapping
+namespace NailStudioApp.Service.MappingProfile
 {
-    public class ServiceMappingProfile : Profile
+    using NailStudio.Data.Models;
+    public class ServiceMappingProfile:Profile
     {
+
         public ServiceMappingProfile()
         {
             CreateMap<Service, ServiceIndexViewModel>();

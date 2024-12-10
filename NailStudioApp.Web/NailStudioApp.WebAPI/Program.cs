@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using NailStudio.Data.Models;
-using NailStudioApp.Services.Mapping.Mapping;
+using NailStudioApp.Services.Mapping;
 using NailStudioApp.Web.Infrastruction.Extensions;
 
 namespace NailStudioApp.WebAPI

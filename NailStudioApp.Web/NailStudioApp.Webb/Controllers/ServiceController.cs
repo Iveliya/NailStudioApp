@@ -12,6 +12,7 @@ using NuGet.Protocol.Core.Types;
 
 namespace NailStudioApp.Webb.Controllers
 {
+    using NailStudio.Data.Models;
     using NailStudioApp.Web.ViewModel.Service;
     public class ServiceController : Controller
     {
