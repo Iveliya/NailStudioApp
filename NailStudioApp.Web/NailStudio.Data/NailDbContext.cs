@@ -14,12 +14,13 @@ namespace NailStudio.Data
 {
     public class NailDbContext :IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
-        public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Service> Services { get; set; }
-        public DbSet<StaffMember> StaffMembers { get; set; }
-        public DbSet<UserService> UserServices { get; set; }
-        public DbSet<Review> Reviews { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; } = null!;
+        public virtual DbSet<Service> Services { get; set; } = null!;
+        public virtual DbSet<StaffMember> StaffMembers { get; set; }=null!;
+        public virtual DbSet<UserService> UserServices { get; set; } = null!;
+        public virtual DbSet<Review> Reviews { get; set; } = null!;
+        public virtual DbSet<Schedule> Schedules { get; set; } = null!;
+        public virtual DbSet<Manager> Managers { get; set; } = null!;
 
         public NailDbContext(DbContextOptions<NailDbContext> options)
             : base(options)

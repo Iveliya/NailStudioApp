@@ -12,8 +12,8 @@ using NailStudio.Data;
 namespace NailStudio.Data.Migrations
 {
     [DbContext(typeof(NailDbContext))]
-    [Migration("20241206093516_InitialMig")]
-    partial class InitialMig
+    [Migration("20241209093900_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -188,6 +188,28 @@ namespace NailStudio.Data.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("NailStudio.Data.Models.Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("WorkPhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("NailStudio.Data.Models.Review", b =>
                 {
                     b.Property<Guid>("Id")
@@ -285,7 +307,7 @@ namespace NailStudio.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("842748b9-bfd5-4411-affe-b744bf0799b3"),
+                            Id = new Guid("b937dcb0-2c42-4df6-b6a1-424211579bce"),
                             Description = "A professional manicure service.",
                             DurationInMinutes = 60,
                             ImageUrl = "https://example.com/images/manicure.jpg",
@@ -295,7 +317,7 @@ namespace NailStudio.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("363e9fab-4599-4972-925e-569124ec2f2d"),
+                            Id = new Guid("575078bd-3528-497e-a8af-e2f993c31343"),
                             Description = "A relaxing pedicure service.",
                             DurationInMinutes = 75,
                             ImageUrl = "https://example.com/images/pedicure.jpg",
@@ -336,7 +358,7 @@ namespace NailStudio.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("72cec1bf-dab5-4e14-aaab-8d7818ec0812"),
+                            Id = new Guid("d12c229c-5aa3-47c5-a5d3-00fc1303b712"),
                             IsDeleted = false,
                             Name = "Anna Rose",
                             PhotoUrl = "https://www.flagman.bg/news/2024/10/30/173027983811467.png",
@@ -344,7 +366,7 @@ namespace NailStudio.Data.Migrations
                         },
                         new
                         {
-                            Id = new Guid("ff5c5e27-fc45-4921-bb6f-cb797aff6dad"),
+                            Id = new Guid("d48c343d-a8f9-4eb9-a51c-197a7916de44"),
                             IsDeleted = false,
                             Name = "Jane Smith",
                             PhotoUrl = "https://visages.net/wp-content/uploads/2022/06/dsc_3716.jpg",
@@ -518,6 +540,17 @@ namespace NailStudio.Data.Migrations
                     b.Navigation("Service");
 
                     b.Navigation("StaffMember");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("NailStudio.Data.Models.Manager", b =>
+                {
+                    b.HasOne("NailStudio.Data.Models.User", "User")
+                        .WithOne()
+                        .HasForeignKey("NailStudio.Data.Models.Manager", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

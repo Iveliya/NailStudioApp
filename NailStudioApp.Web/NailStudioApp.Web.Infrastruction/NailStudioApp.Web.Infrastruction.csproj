@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NailStudio.Data\NailStudio.Data.csproj" />
+    <ProjectReference Include="..\NailStudioApp.Common\NailStudioApp.Common.csproj" />
   </ItemGroup>
 
 </Project>

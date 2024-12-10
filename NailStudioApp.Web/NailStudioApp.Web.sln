@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NailStudioApp.Web.ViewModel
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{1827089A-CBEB-403A-A650-5402A52C39E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NailStudioApp.Services.Data", "NailStudioApp.Services.Data\NailStudioApp.Services.Data.csproj", "{52E97EA6-2F7E-4908-95B5-0FABEF88045B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NailStudioApp.Services.Data", "NailStudioApp.Services.Data\NailStudioApp.Services.Data.csproj", "{52E97EA6-2F7E-4908-95B5-0FABEF88045B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NailStudioApp.Services.Mapping", "NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj", "{306CA1A5-A94A-4A09-8B0F-FD1C8E2AA40A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NailStudioApp.Services.Mapping", "NailStudioApp.Services.Mapping\NailStudioApp.Services.Mapping.csproj", "{306CA1A5-A94A-4A09-8B0F-FD1C8E2AA40A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NailStudioApp.WebAPI", "NailStudioApp.WebAPI\NailStudioApp.WebAPI.csproj", "{EE7230DD-C945-4871-93E9-C0A4D96975D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{306CA1A5-A94A-4A09-8B0F-FD1C8E2AA40A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{306CA1A5-A94A-4A09-8B0F-FD1C8E2AA40A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{306CA1A5-A94A-4A09-8B0F-FD1C8E2AA40A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE7230DD-C945-4871-93E9-C0A4D96975D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7230DD-C945-4871-93E9-C0A4D96975D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7230DD-C945-4871-93E9-C0A4D96975D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7230DD-C945-4871-93E9-C0A4D96975D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{BD9CC4F7-3765-4ED5-AFA8-C1993A19C863} = {D56A78A0-C400-4757-ADFF-A11F628460ED}
 		{52E97EA6-2F7E-4908-95B5-0FABEF88045B} = {1827089A-CBEB-403A-A650-5402A52C39E1}
 		{306CA1A5-A94A-4A09-8B0F-FD1C8E2AA40A} = {1827089A-CBEB-403A-A650-5402A52C39E1}
+		{EE7230DD-C945-4871-93E9-C0A4D96975D9} = {D56A78A0-C400-4757-ADFF-A11F628460ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F3BCCAD-62B0-4ABB-87E6-4BDD65ECD315}

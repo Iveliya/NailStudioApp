@@ -29,6 +29,10 @@ namespace NailStudioApp.Webb
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            string adminEmail = builder.Configuration.GetValue<string>("Administrator:Email");
+            string adminUsername = builder.Configuration.GetValue<string>("Administrator:Username");
+            string adminPassword = builder.Configuration.GetValue<string>("Administrator:Password");
+            
 
             builder.Services.AddDbContext<NailStudio.Data.NailDbContext>(options =>
                 options.UseSqlServer("Server=DESKTOP-AEUQ5AJ\\SQLEXPRESS;Database=NailStudio;Trusted_Connection=True;TrustServerCertificate=True")
@@ -74,11 +78,11 @@ namespace NailStudioApp.Webb
             //builder.Services.AddScoped<IRepository<User, object>, BaseRepository<User, object>>();
 
             builder.Services.RegisterRepositories(typeof(User).Assembly);
-
+            builder.Services.AddScoped<IManagerService, ManagerService>();
             builder.Services.AddAutoMapper(typeof(ServiceMappingProfile));
             builder.Services.AddAutoMapper(typeof(StaffMemberMappingProfile));
             builder.Services.AddAutoMapper(typeof(ReviewMappingProfile));
-
+            
             //builder.Services.AddScoped<IStaffMemberService, StaffMemberService>();
             //var config = new MapperConfiguration(cfg => {
             //    cfg.AddProfile<StaffMemberMappingProfile>();
@@ -108,12 +112,22 @@ namespace NailStudioApp.Webb
 
             app.UseAuthentication();
             app.UseAuthorization();
+            //app.SeedAdministrator("admin@nailstudioapp.com", "Admin", "admin123");
 
+            if (app.Environment.IsDevelopment())
+            {
+                app.SeedAdministrator(adminEmail, adminUsername, adminPassword);
+                //app.SeedMovies(jsonPath);
+            }
+
+            app.MapControllerRoute(
+                name: "Areas",
+                pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
-            //app.ApplyMigration();
+            app.ApplyMigration();
             app.Run();
             
         }
