@@ -47,6 +47,11 @@ namespace NailStudio.Data.Configurations
                    .HasForeignKey(us => us.ServiceId)
                    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(s => s.TimeSlots) 
+                   .WithOne(ts => ts.Service)
+                   .HasForeignKey(ts => ts.ServiceId)
+                   .OnDelete(DeleteBehavior.SetNull);
+
             builder.HasQueryFilter(s => !s.IsDeleted);
 
              builder.HasData(SeedServices()); }

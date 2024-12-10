@@ -18,6 +18,7 @@ namespace NailStudio.Data.Models
 
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public ICollection<UserService> UserServices { get; set; } = new List<UserService>();
+        public ICollection<TimeSlot> TimeSlots { get; set; } = new List<TimeSlot>();
 
 
     }

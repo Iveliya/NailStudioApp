@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NailStudio.Data;
 
@@ -11,9 +12,11 @@ using NailStudio.Data;
 namespace NailStudio.Data.Migrations
 {
     [DbContext(typeof(NailDbContext))]
-    partial class NailDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241210222154_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

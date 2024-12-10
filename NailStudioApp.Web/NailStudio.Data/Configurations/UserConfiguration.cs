@@ -37,6 +37,12 @@ namespace NailStudio.Data.Configurations
                    .HasForeignKey(r => r.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(u => u.TimeSlots)
+       .WithOne(ts => ts.User)
+       .HasForeignKey(ts => ts.UserId)
+       .OnDelete(DeleteBehavior.SetNull);
+
+
             builder.HasQueryFilter(u => !u.IsDeleted);
 
 

@@ -1,0 +1,20 @@
+﻿@model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
+
+<h2>Свободни часове</h2>
+
+<form method="post">
+    <div>
+        <label for="AppointmentTime">Изберете час</label>
+        <select id="AppointmentTime" name="AppointmentTime">
+            <option value="">Изберете час</option>
+            @foreach (var time in Model.AvailableTimes)
+            {
+                <option value="@time.Value">@time.Text</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <button type="submit">Запази</button>
+    </div>
+</form>

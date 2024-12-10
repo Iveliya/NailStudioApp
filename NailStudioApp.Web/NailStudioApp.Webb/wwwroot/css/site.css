@@ -1,4 +1,4 @@
-html {
+/*html {
   font-size: 14px;
 }
 
@@ -55,3 +55,308 @@ body {
         background-color: #0056b3;
         transform: scale(1.05);
     }
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+}
+
+.logo {
+    width: 150px;
+    margin: 20px auto;
+}
+
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+    .hero img {
+        width: 100%;
+        height: auto;
+    }
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.about {
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+    background: #f9f9f9;
+}
+
+    .about .content {
+        max-width: 600px;
+        margin-right: 20px;
+    }
+
+    .about .background-image {
+        width: 50%;
+    }
+
+.cta-buttons {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background: #ff66cc;
+    color: white;
+}
+
+    .btn-primary:hover {
+        background: #e055b5;
+    }
+
+.btn-secondary {
+    background: #66ccff;
+    color: white;
+}
+
+    .btn-secondary:hover {
+        background: #55b5e0;
+    }
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+    footer .contact-info p,
+    footer .social-media a {
+        margin: 5px 0;
+    }
+
+    footer .map iframe {
+        width: 100%;
+        height: 200px;
+        border: none;
+    }
+*/
+
+
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;  Това гарантира, че футера ще бъде на дъното 
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #ffe6f7, #ccf2ff);  Градиент фон 
+    color: #333;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);   
+    border-bottom: 2px solid #ff66cc;
+}
+.carousel-caption h1 {
+    font-size: 3rem; 
+    color: #ff66cc; 
+    font-weight: bold; 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
+}
+
+.carousel-caption p {
+    font-size: 1.5rem; 
+    color: #ffffff; 
+    font-weight: normal;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); 
+}
+
+
+.logo {
+    width: 150px;
+    margin: 0 auto;
+}
+
+.hero {
+    position: relative;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+    .hero img {
+        width: 100%;
+        height: auto;
+        filter: brightness(70%);  
+    }
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    font-family: 'Georgia', serif;
+    color: #fff;
+}
+
+
+
+.about {
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+    background: #ffffffdd;  
+    border-radius: 15px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cta-buttons {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff66cc, #ff99ff);
+    color: white;
+    border: none;
+}
+
+    .btn-primary:hover {
+        background: #e055b5;
+        transform: scale(1.1);
+    }
+
+.btn-secondary {
+    background: linear-gradient(135deg, #66ccff, #99ccff);
+    color: white;
+    border: none;
+}
+
+    .btn-secondary:hover {
+        background: #55b5e0;
+        transform: scale(1.1);
+    }
+
+footer {
+    background: linear-gradient(135deg, #333, #555);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #ff66cc;
+}
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 20px;
+    background: url('/images/background2.jpg') no-repeat center center; 
+    background-size: cover; 
+    color: #333;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin: 20px;
+}
+
+    .about .content {
+        max-width: 600px;
+        background: rgba(255, 255, 255, 0.8); 
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+ Секциите за "About" 
+.about {
+    display: flex;
+    justify-content: center;  Центрираме съдържанието по хоризонтала 
+    align-items: center;  Центрираме съдържанието по вертикала 
+    padding: 40px 20px;
+    background: url('/images/background2.jpg') no-repeat center center;
+    background-size: cover;
+    color: #333;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    height: 500px;  Можете да добавите височина или използвайте 100vh 
+}
+
+     Контейнерът на съдържанието 
+    .about .content {
+        max-width: 800px;  Разширяване на максималната ширина 
+        width: 90%;  Заема 90% от ширината на контейнера 
+        background: rgba(255, 255, 255, 0.8);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        text-align: center;  Центрираме текста вътре 
+    }
+
+         Заглавие в секцията 
+        .about .content h2 {
+            font-family: 'Poppins', sans-serif;  Модерен шрифт 
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+         Параграфи в секцията 
+        .about .content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+
+
+

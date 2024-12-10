@@ -21,6 +21,7 @@ namespace NailStudio.Data
         public virtual DbSet<Review> Reviews { get; set; } = null!;
         public virtual DbSet<Schedule> Schedules { get; set; } = null!;
         public virtual DbSet<Manager> Managers { get; set; } = null!;
+        public virtual DbSet<TimeSlot> TimeSlots { get; set; }
 
         public NailDbContext(DbContextOptions<NailDbContext> options)
             : base(options)

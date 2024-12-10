@@ -15,5 +15,6 @@ namespace NailStudio.Data.Models
         public bool IsDeleted { get; set; } = false;
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
         public ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+        public ICollection<TimeSlot> TimeSlots { get; set; } = new List<TimeSlot>();
     }
 }

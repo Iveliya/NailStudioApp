@@ -1,8 +1,140 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nail Studio</title>
+    <link rel="stylesheet" href="/css/site.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <img src="/images/logo.jpg" alt="Nail Studio Logo" class="logo">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/images/mainPic.jpg" class="d-block w-100" alt="Nail Art Image 1">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Welcome to Nail Studio</h1>
+                        <p>Luxury Nail Care, Modern Design, and Expert Technicians</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/background.webp" class="d-block w-100" alt="Nail Art Image 2">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Creative Designs for Your Nails</h1>
+                        <p>Custom Nail Art for Every Occasion</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/pic3.webp" class="d-block w-100" alt="Nail Art Image 3">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Expert Technicians at Your Service</h1>
+                        <p>Providing Exceptional Nail Services</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/pic1.webp" class="d-block w-100" alt="Nail Art Image 3">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Welcome to Our Stylish Nail Studio</h1>
+                        <p>Step into a world of elegance and relaxation. Our Nail Studio boasts a sleek, modern design with a spacious and comfortable atmosphere. Every detail has been carefully crafted to create the perfect environment for you to unwind while enjoying top-notch nail care. With a blend of beauty and luxury, our studio is the ideal place to treat yourself to exceptional nail services.</p>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </header>
+
+    <section class="about">
+        <div class="content">
+            <h2>About Us</h2>
+            <p>Nail Studio has been the premier destination for nail care and beauty for over 10 years. Our experienced staff and relaxing environment ensure you get the treatment you deserve. From classic manicures to intricate nail art, we have it all!</p>
+        </div>
+    </section>
+
+    <section class="cta-buttons">
+        <a href="@Url.Action("Index", "Service")" class="btn btn-primary">View Procedures</a>
+        <a href="@Url.Action("Index", "StaffMember")" class="btn btn-secondary">Meet Our Team</a>
+    </section>
+
+    <footer>
+        <div class="contact-info">
+            <p><strong>Phone:</strong> +359-123-456-789</p>
+            <p><strong>Email:</strong> <a href="mailto:info@nailstudio.com">info@nailstudio.com</a></p>
+            <p><strong>Address:</strong> 123 Beauty Avenue, Sofia, Bulgaria</p>
+        </div>
+        <div class="social-media">
+            <a href="https://facebook.com/nailstudio">Facebook</a> |
+            <a href="https://instagram.com/nailstudio">Instagram</a>
+        </div>
+        <div class="map">
+            <iframe src="https://maps.google.com/embed?..." title="Salon Location Map"></iframe>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+@* <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nail Studio</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+    <header>
+        <img src="/images/logo.jpg" alt="Nail Studio Logo" class="logo">
+        <div class="hero">
+            <img src="/images/mainPic.jpg" alt="Beautiful Nail Art">
+            <div class="hero-text">
+                <h1>Welcome to Nail Studio</h1>
+                <p>Luxury Nail Care, Modern Design, and Expert Technicians</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="about">
+        <div class="content">
+            <h2>About Us</h2>
+            <p>Nail Studio has been the premier destination for nail care and beauty for over 10 years. Our experienced staff and relaxing environment ensure you get the treatment you deserve. From classic manicures to intricate nail art, we have it all!</p>
+        </div>
+    </section>
+
+    <section class="cta-buttons">
+        <a href="@Url.Action("Index", "Service")" class="btn btn-primary">View Procedures</a>
+
+        <a href="@Url.Action("Index", "StaffMember")" class="btn btn-secondary">Meet Our Team</a>
+    </section>
+
+    <footer>
+        <div class="contact-info">
+            <p><strong>Phone:</strong> +359-123-456-789</p>
+            <p><strong>Email:</strong> <a href="mailto:info@nailstudio.com">info@nailstudio.com</a></p>
+            <p><strong>Address:</strong> 123 Beauty Avenue, Sofia, Bulgaria</p>
+        </div>
+        <div class="social-media">
+            <a href="https://facebook.com/nailstudio">Facebook</a> |
+            <a href="https://instagram.com/nailstudio">Instagram</a>
+        </div>
+        <div class="map">
+            <iframe src="https://maps.google.com/embed?..." title="Salon Location Map"></iframe>
+        </div>
+    </footer>
+</body>
+</html> *@
+
+

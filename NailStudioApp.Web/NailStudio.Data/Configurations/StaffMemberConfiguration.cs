@@ -40,6 +40,12 @@ namespace NailStudio.Data.Configurations
                    .HasForeignKey(s => s.StaffMemberId)
                    .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasMany(sm => sm.TimeSlots)
+       .WithOne(ts => ts.StaffMember)
+       .HasForeignKey(ts => ts.StaffMemberId)
+       .OnDelete(DeleteBehavior.Cascade);
+
+
             builder.HasQueryFilter(sm => !sm.IsDeleted);
 
             builder.HasData(this.SeedStaffMembers());

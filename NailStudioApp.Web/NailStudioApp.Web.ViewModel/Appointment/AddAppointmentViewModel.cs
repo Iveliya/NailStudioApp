@@ -10,13 +10,18 @@ namespace NailStudioApp.Web.ViewModel.Appointment
 {
     public class AddAppointmentViewModel
     {
-        public Guid UserId { get; set; } 
-        public Guid ServiceId { get; set; } 
-        public DateTime AppointmentDate { get; set; } 
-        public Guid? StaffMemberId { get; set; } 
+       
+            public Guid ServiceId { get; set; } // Идентификатор на процедурата
+            public DateTime AppointmentDate { get; set; } // Дата и час на запазване
+            public Guid StaffMemberId { get; set; } // Идентификатор на персонала
+            public List<SelectListItem> AvailableStaffMembers { get; set; } = new List<SelectListItem>();
 
-        public IEnumerable<SelectListItem> Users { get; set; }
-        public IEnumerable<SelectListItem> Services { get; set; }
-        public IEnumerable<SelectListItem> StaffMembers { get; set; }
+            // Свободни часове
+            public List<SelectListItem> AvailableTimes { get; set; } = new List<SelectListItem>();
+
+            // Процедури, които може да избере потребителят
+            public List<SelectListItem> AvailableServices { get; set; } = new List<SelectListItem>();
+        
+
     }
 }

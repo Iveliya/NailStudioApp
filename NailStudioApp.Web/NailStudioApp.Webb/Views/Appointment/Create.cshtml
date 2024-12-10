@@ -1,128 +1,168 @@
-﻿@model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
+﻿@* @model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
 
 @{
-    ViewData["Title"] = "Create Appointment";
+    ViewData["Title"] = "Създаване на среща";
 }
 
-<div class="container mt-5">
-    <div class="card shadow-lg border-0 rounded-4">
-        <div class="card-header bg-info text-white rounded-top">
-            <h3 class="text-center mb-0">Create Appointment</h3>
-        </div>
+<h1>Създайте нова среща</h1>
 
-        <div class="card-body p-5">
-            <form asp-action="Create" method="post" class="needs-validation" novalidate>
-
-                <div class="mb-4">
-                    <label for="UserId" class="form-label fw-bold text-secondary">User</label>
-                    <select class="form-select form-select-lg rounded-3" id="UserId" name="UserId" required>
-                        <option value="">Select User</option>
-                        @foreach (var user in Model.Users)
-                        {
-                            <option value="@user.Value">@user.Text</option>
-                        }
-                    </select>
-                    <div class="invalid-feedback">
-                        Please select a user.
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="ServiceId" class="form-label fw-bold text-secondary">Service</label>
-                    <select class="form-select form-select-lg rounded-3" id="ServiceId" name="ServiceId" required>
-                        <option value="">Select Service</option>
-                        @foreach (var service in Model.Services)
-                        {
-                            <option value="@service.Value">@service.Text</option>
-                        }
-                    </select>
-                    <div class="invalid-feedback">
-                        Please select a service.
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="StaffMemberId" class="form-label fw-bold text-secondary">Staff Member</label>
-                    <select class="form-select form-select-lg rounded-3" id="StaffMemberId" name="StaffMemberId">
-                        <option value="">Select Staff Member (Optional)</option>
-                        @foreach (var staff in Model.StaffMembers)
-                        {
-                            <option value="@staff.Value">@staff.Text</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="mb-4">
-                    <label for="AppointmentDate" class="form-label fw-bold text-secondary">Appointment Date</label>
-                    <input type="datetime-local" class="form-control form-control-lg rounded-3" id="AppointmentDate" name="AppointmentDate" required>
-                    <div class="invalid-feedback">
-                        Please select a valid date and time.
-                    </div>
-                </div>
-
-               
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="@Url.Action("Index", "Appointment")" class="btn btn-outline-secondary btn-lg shadow">
-                        <i class="bi bi-arrow-left-circle me-1"></i> Back to Appointments
-                    </a>
-                    
-                    <button type="submit" class="btn btn-success btn-lg shadow">
-                        <i class="bi bi-check-circle me-2"></i> Create Appointment
-                    </button>
-                </div>
-            </form>
-        </div>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="ServiceId">Изберете услуга:</label>
+        <select asp-for="ServiceId" class="form-control" asp-items="Model.AvailableServices">
+            <option value="">Изберете услуга</option>
+        </select>
     </div>
-</div>
+
+    <div class="form-group">
+        <label for="StaffMemberId">Изберете служител:</label>
+        <select asp-for="StaffMemberId" class="form-control" asp-items="Model.AvailableStaffMembers">
+            <option value="">Изберете служител</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="AppointmentDate">Изберете дата:</label>
+        <input type="date" asp-for="AppointmentDate" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div class="form-group">
+        <label for="AvailableTimes">Изберете час:</label>
+        <select id="AvailableTimes" class="form-control">
+            <option value="">Изберете час</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Запази срещата</button>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Когато служител или дата се променят, да се обновят наличните часове
+            $("select#StaffMemberId, input#AppointmentDate").change(function () {
+                var staffMemberId = $("select#StaffMemberId").val();
+                var appointmentDate = $("input#AppointmentDate").val();
+
+                if (staffMemberId && appointmentDate) {
+                    $.getJSON("/Appointment/GetAvailableTimes", { staffMemberId: staffMemberId, date: appointmentDate }, function (data) {
+                        if (data.error) {
+                            alert(data.error);
+                            $("#AvailableTimes").html('<option value="">Няма налични часове</option>');
+                        } else {
+                            var options = '';
+                            $.each(data.availableTimes, function (index, item) {
+                                options += `<option value="${item.value}">${item.text}</option>`;
+                            });
+                            $("#AvailableTimes").html(options);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+} *@
+@model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
+
+<form method="post" id="appointmentForm">
+    <!-- Избор на служител -->
+    <div>
+        <label for="StaffMemberId">Служител</label>
+        <select id="StaffMemberId" name="StaffMemberId">
+            <option value="">Изберете служител</option>
+            @foreach (var staff in Model.AvailableStaffMembers)
+            {
+                <option value="@staff.Value">@staff.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Избор на дата -->
+    <div>
+        <label for="AppointmentDate">Дата</label>
+        <input type="date" id="AppointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-dd")" min="" />
+    </div>
+
+    <!-- Избор на процедура -->
+    <div>
+        <label for="ServiceId">Процедура</label>
+        <select id="ServiceId" name="ServiceId">
+            <option value="">Изберете процедура</option>
+            @foreach (var service in Model.AvailableServices)
+            {
+                <option value="@service.Value">@service.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Избор на свободен час -->
+    <div>
+        <label for="AppointmentTime">Час</label>
+        <select id="AppointmentTime" name="AppointmentTime">
+            <option value="">Изберете час</option>
+        </select>
+    </div>
+
+    <!-- Кнопка за запазване -->
+    <div>
+        <button type="submit">Запази</button>
+    </div>
+</form>
 
 <script>
-    (function () {
-        'use strict';
-        var forms = document.querySelectorAll('.needs-validation');
-        Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
-    })();
+    document.addEventListener('DOMContentLoaded', function () {
+        // Задаваме минималната дата (след днешния ден)
+        const today = new Date();
+        today.setDate(today.getDate() + 1); // Увеличаваме деня с 1
+        const dateInput = document.getElementById('AppointmentDate');
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, '0');
+        const day = today.getDate().toString().padStart(2, '0');
+        dateInput.min = `${year}-${month}-${day}`;
+
+        // Слушатели за промяна на дата, служител и процедура
+        document.getElementById('StaffMemberId').addEventListener('change', fetchAvailableTimes);
+        document.getElementById('AppointmentDate').addEventListener('change', fetchAvailableTimes);
+        document.getElementById('ServiceId').addEventListener('change', fetchAvailableTimes);
+
+        // Функция за получаване на свободните часове
+        function fetchAvailableTimes() {
+            const staffMemberId = document.getElementById('StaffMemberId').value;
+            const appointmentDate = document.getElementById('AppointmentDate').value;
+            const serviceId = document.getElementById('ServiceId').value;
+
+            if (staffMemberId && appointmentDate && serviceId) {
+                // Направи AJAX заявка към контролера за свободни часове
+                fetch(`/Appointment/GetAvailableTimes?staffMemberId=${staffMemberId}&date=${appointmentDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const timeSelect = document.getElementById('AppointmentTime');
+                        timeSelect.innerHTML = '<option value="">Изберете час</option>'; // Изчистваме предишните часове
+
+                        // Ако има свободни часове, добавяме ги
+                        if (data.availableTimes && data.availableTimes.length > 0) {
+                            data.availableTimes.forEach(time => {
+                                const option = document.createElement('option');
+                                option.value = time.Value;
+                                option.textContent = time.Text;
+                                timeSelect.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = 'Няма свободни часове';
+                            timeSelect.appendChild(option);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching available times:', error));
+            }
+        }
+
+        // Автоматично извикваме функцията при зареждане на страницата
+        fetchAvailableTimes();
+    });
 </script>
 
 
 
 
- @* @model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
-
-@{
-    ViewData["Title"] = "Add Appointment";
-}
-
-<h1>Add Appointment</h1>
-
-<form asp-action="AddAppointment" method="post">
-    <div class="form-group">
-        <label for="UserId">User</label>
-        <select asp-for="UserId" class="form-control" asp-items="Model.Users"></select>
-    </div>
-
-    <div class="form-group">
-        <label for="ServiceId">Service</label>
-        <select asp-for="ServiceId" class="form-control" asp-items="Model.Services"></select>
-    </div>
-
-    <div class="form-group">
-        <label for="AppointmentDate">Appointment Date</label>
-        <input asp-for="AppointmentDate" class="form-control" type="datetime-local" />
-    </div>
-
-    <div class="form-group">
-        <label for="StaffMemberId">Staff Member</label>
-        <select asp-for="StaffMemberId" class="form-control" asp-items="Model.StaffMembers"></select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Book Appointment</button>
-</form>
- *@
