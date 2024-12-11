@@ -16,6 +16,21 @@ namespace NailStudioApp.Service.MappingProfile
             CreateMap<StaffMember, StaffMemberIndexViewModel>();
             CreateMap<AddStaffMemberFormModel, StaffMember>()
                .ForMember(dest => dest.Id, opt => opt.Ignore());
+            CreateMap<StaffMember, EditStaffMemberViewModel>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.PhotoUrl));
+
+            CreateMap<EditStaffMemberViewModel, StaffMember>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+                .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.PhotoUrl));
+            CreateMap<StaffMember, DeleteStaffMemberViewModel>()
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+            .ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.PhotoUrl));
+
+
         }
     }
 }

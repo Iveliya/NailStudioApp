@@ -1,0 +1,43 @@
+﻿@model NailStudioApp.Web.ViewModel.Schedule.AddScheduleViewModel
+
+@{
+    ViewData["Title"] = "Add Schedule";
+}
+
+<div class="container mt-5">
+    <h2 class="text-primary fw-bold">Add New Schedule</h2>
+
+    <form asp-action="Add" method="post">
+        <div class="form-group">
+            <label asp-for="StaffMemberId" class="control-label"></label>
+            <select asp-for="StaffMemberId" class="form-control" asp-items="Model.StaffMembers">
+                <option value="">Select Staff Member</option>
+            </select>
+            <span asp-validation-for="StaffMemberId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="StartTime" class="control-label">Start Time</label>
+            <input asp-for="StartTime" class="form-control" type="time" value="@Model.StartTime.ToString("HH:mm")" />
+            <span asp-validation-for="StartTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="EndTime" class="control-label">End Time</label>
+            <input asp-for="EndTime" class="form-control" type="time" value="@Model.EndTime.ToString("HH:mm")" />
+            <span asp-validation-for="EndTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-check">
+            <input asp-for="IsAvailable" class="form-check-input" type="checkbox" />
+            <label class="form-check-label" for="IsAvailable">Is Available</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Schedule</button>
+        <a href="/Schedule/Manage" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

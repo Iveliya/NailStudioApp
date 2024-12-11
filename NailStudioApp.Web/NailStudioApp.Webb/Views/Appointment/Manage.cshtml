@@ -1,0 +1,32 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Appointment.AppointmentIndexViewModel>
+
+<div class="container">
+    <h2>Manage Appointments</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>User Name</th>
+                <th>Appointment Date</th>
+                <th>Staff Member</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.ServiceName</td>
+                    <td>@appointment.UserName</td>
+                    <td>@appointment.FormattedDate</td>
+                    <td>@appointment.StaffMemberName</td>
+                    <td>@appointment.ServicePrice</td>
+                    <td>
+                        <a href="/Appointment/Delete/@appointment.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -62,6 +62,10 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="manageDropdown">
                                         <li><a class="dropdown-item" href="/Service/Manage">Services</a></li>
+                                        <li><a class="dropdown-item" href="/Appointment/Manage">Appointments</a></li>
+                                        <li><a class="dropdown-item" href="/Review/Manage">Review</a></li>
+                                        <li><a class="dropdown-item" href="/Schedule/Manage">Schedules</a></li>
+                                        <li><a class="dropdown-item" href="/StaffMember/Manage">StaffMember</a></li>
                                         <li><a class="dropdown-item" href="/OtherEntity/Manage">Other Entity</a></li>
                                     </ul>
                                 </li>
@@ -77,6 +81,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Reviews</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
+                                </li>
                             }
                             else
                             {
@@ -91,6 +98,9 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Reviews</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Schedule" asp-action="Index">Schedule</a>
                                 </li>
                             }
                         }

@@ -1,0 +1,36 @@
+﻿@model NailStudioApp.Web.ViewModel.StaffMember.EditStaffMemberViewModel
+
+@{
+    ViewData["Title"] = "Edit Staff Member";
+}
+
+<div class="container mt-5">
+    <h2>Edit Staff Member</h2>
+    <form asp-action="Edit" method="post">
+        <div class="form-group">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Role" class="form-label"></label>
+            <input asp-for="Role" class="form-control" />
+            <span asp-validation-for="Role" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PhotoUrl" class="form-label"></label>
+            <input asp-for="PhotoUrl" class="form-control" />
+            <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Save Changes</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

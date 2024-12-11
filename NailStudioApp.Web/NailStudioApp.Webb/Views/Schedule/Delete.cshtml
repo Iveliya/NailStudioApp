@@ -1,0 +1,22 @@
+﻿@model NailStudioApp.Web.ViewModel.Schedule.DeleteScheduleViewModel
+
+@{
+    ViewData["Title"] = "Delete Schedule";
+}
+
+<div class="container mt-5">
+    <h2 class="text-danger fw-bold">Are you sure you want to delete this schedule?</h2>
+
+    <div class="alert alert-warning">
+        <p><strong>Staff Member:</strong> @Model.StaffMemberName</p>
+        <p><strong>Start Time:</strong> @Model.StartTime.ToString("HH:mm")</p>
+        <p><strong>End Time:</strong> @Model.EndTime.ToString("HH:mm")</p>
+        <p><strong>Available:</strong> @(Model.IsAvailable ? "Yes" : "No")</p>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Yes, Delete</button>
+        <a href="/Schedule/Manage" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

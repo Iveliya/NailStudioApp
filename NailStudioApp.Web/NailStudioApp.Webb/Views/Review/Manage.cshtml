@@ -1,0 +1,30 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Review.IndexReviewViewModel>
+
+<div class="container">
+    <h2>Manage Reviews</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Review Content</th>
+                @* <th>User Name</th> *@
+                <th>Rating</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var review in Model)
+            {
+                <tr>
+                    <td>@review.Content</td>
+                    @* <td>@review.UserName</td> *@
+                    <td>@review.Rating</td>
+                    <td>@review.Date.ToString("dddd, MMM dd, yyyy")</td>
+                    <td>
+                        <a href="/Review/Delete/@review.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

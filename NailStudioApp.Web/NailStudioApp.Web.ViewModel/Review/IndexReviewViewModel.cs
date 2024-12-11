@@ -8,6 +8,7 @@ namespace NailStudioApp.Web.ViewModel.Review
 {
     public class IndexReviewViewModel
     {
+        public Guid Id { get; set; }
         public string Content { get; set; }
         public int Rating { get; set; }
         public DateTime Date { get; set; }

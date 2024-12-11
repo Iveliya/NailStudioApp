@@ -1,0 +1,26 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Schedule.IndexScheduleViewModel>
+
+<div class="container">
+    <h2>Manage Schedules</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Staff Member</th>
+                <th>Start Time</th>
+                <th>End Time</th>@* 
+                <th>Available</th> *@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var schedule in Model)
+            {
+                <tr>
+                    <td>@schedule.StaffMemberName</td>
+                    <td>@schedule.StartTime.ToString("HH:mm")</td>
+                    <td>@schedule.EndTime.ToString("HH:mm")</td>@* 
+                    <td>@(schedule.IsAvailable ? "Yes" : "No")</td> *@
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

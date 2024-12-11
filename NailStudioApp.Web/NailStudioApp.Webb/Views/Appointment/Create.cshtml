@@ -62,107 +62,102 @@
         });
     </script>
 } *@
-@model NailStudioApp.Web.ViewModel.Appointment.AddAppointmentViewModel
 
-<form method="post" id="appointmentForm">
-    <!-- Избор на служител -->
-    <div>
-        <label for="StaffMemberId">Служител</label>
-        <select id="StaffMemberId" name="StaffMemberId">
-            <option value="">Изберете служител</option>
-            @foreach (var staff in Model.AvailableStaffMembers)
-            {
-                <option value="@staff.Value">@staff.Text</option>
-            }
+
+@model NailStudioApp.Web.ViewModel.Appointment.AppointmentViewModel
+
+<h2>Create Appointment</h2>
+
+<form asp-action="Create" method="post">
+    <!-- Service Selection -->
+    <div class="form-group">
+        <label for="ServiceId">Select Service</label>
+        <select asp-for="ServiceId" class="form-control" asp-items="Model.Services" onchange="this.form.submit()">
         </select>
     </div>
 
-    <!-- Избор на дата -->
-    <div>
-        <label for="AppointmentDate">Дата</label>
-        <input type="date" id="AppointmentDate" name="AppointmentDate" value="@Model.AppointmentDate.ToString("yyyy-MM-dd")" min="" />
-    </div>
-
-    <!-- Избор на процедура -->
-    <div>
-        <label for="ServiceId">Процедура</label>
-        <select id="ServiceId" name="ServiceId">
-            <option value="">Изберете процедура</option>
-            @foreach (var service in Model.AvailableServices)
-            {
-                <option value="@service.Value">@service.Text</option>
-            }
+    <!-- Staff Member Selection -->
+    <div class="form-group">
+        <label for="StaffMemberId">Select Staff Member</label>
+        <select asp-for="StaffMemberId" class="form-control" asp-items="Model.StaffMembers" onchange="this.form.submit()">
         </select>
     </div>
 
-    <!-- Избор на свободен час -->
-    <div>
-        <label for="AppointmentTime">Час</label>
-        <select id="AppointmentTime" name="AppointmentTime">
-            <option value="">Изберете час</option>
-        </select>
+    <!-- Date Selection -->
+    <div class="form-group">
+        <label for="SelectedDate">Select Date</label>
+        <input asp-for="SelectedDate" class="form-control" type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
     </div>
 
-    <!-- Кнопка за запазване -->
-    <div>
-        <button type="submit">Запази</button>
+    <!-- Next Button -->
+    <div class="form-group" id="nextButtonSection" style="display:none;">
+        <button type="button" class="btn btn-primary" id="nextButton">Next</button>
+    </div>
+
+    <!-- Available Times Section -->
+    <div id="availableTimesSection" class="form-group" style="display:none;">
+        <label for="AvailableTimes">Select Time</label>
+        <select asp-for="AvailableTimes" class="form-control" asp-items="Model.AvailableTimes">
+        </select>
+        <button type="submit" class="btn btn-primary">Add Appointment</button>
     </div>
 </form>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Задаваме минималната дата (след днешния ден)
-        const today = new Date();
-        today.setDate(today.getDate() + 1); // Увеличаваме деня с 1
-        const dateInput = document.getElementById('AppointmentDate');
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, '0');
-        const day = today.getDate().toString().padStart(2, '0');
-        dateInput.min = `${year}-${month}-${day}`;
+    // Function to show the "Next" button once the service, staff member, and date are selected
+    function checkFormCompletion() {
+        const serviceId = document.querySelector('select[name="ServiceId"]').value;
+        const staffMemberId = document.querySelector('select[name="StaffMemberId"]').value;
+        const selectedDate = document.querySelector('input[name="SelectedDate"]').value;
 
-        // Слушатели за промяна на дата, служител и процедура
-        document.getElementById('StaffMemberId').addEventListener('change', fetchAvailableTimes);
-        document.getElementById('AppointmentDate').addEventListener('change', fetchAvailableTimes);
-        document.getElementById('ServiceId').addEventListener('change', fetchAvailableTimes);
-
-        // Функция за получаване на свободните часове
-        function fetchAvailableTimes() {
-            const staffMemberId = document.getElementById('StaffMemberId').value;
-            const appointmentDate = document.getElementById('AppointmentDate').value;
-            const serviceId = document.getElementById('ServiceId').value;
-
-            if (staffMemberId && appointmentDate && serviceId) {
-                // Направи AJAX заявка към контролера за свободни часове
-                fetch(`/Appointment/GetAvailableTimes?staffMemberId=${staffMemberId}&date=${appointmentDate}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const timeSelect = document.getElementById('AppointmentTime');
-                        timeSelect.innerHTML = '<option value="">Изберете час</option>'; // Изчистваме предишните часове
-
-                        // Ако има свободни часове, добавяме ги
-                        if (data.availableTimes && data.availableTimes.length > 0) {
-                            data.availableTimes.forEach(time => {
-                                const option = document.createElement('option');
-                                option.value = time.Value;
-                                option.textContent = time.Text;
-                                timeSelect.appendChild(option);
-                            });
-                        } else {
-                            const option = document.createElement('option');
-                            option.value = '';
-                            option.textContent = 'Няма свободни часове';
-                            timeSelect.appendChild(option);
-                        }
-                    })
-                    .catch(error => console.error('Error fetching available times:', error));
-            }
+        // Show the "Next" button only if all fields are selected
+        if (serviceId && staffMemberId && selectedDate) {
+            document.getElementById('nextButtonSection').style.display = 'block';
+        } else {
+            document.getElementById('nextButtonSection').style.display = 'none';
         }
+    }
 
-        // Автоматично извикваме функцията при зареждане на страницата
-        fetchAvailableTimes();
-    });
+    // Event listeners for the form fields to call checkFormCompletion whenever any field changes
+    document.querySelector('select[name="ServiceId"]').addEventListener('change', checkFormCompletion);
+    document.querySelector('select[name="StaffMemberId"]').addEventListener('change', checkFormCompletion);
+    document.querySelector('input[name="SelectedDate"]').addEventListener('change', checkFormCompletion);
+
+    // Event listener for the "Next" button to fetch available times
+    document.getElementById('nextButton')?.addEventListener('click', fetchAvailableTimes);
+
+    // Function to fetch available times for the selected service, staff member, and date
+    async function fetchAvailableTimes() {
+        const serviceId = document.querySelector('select[name="ServiceId"]').value;
+        const staffMemberId = document.querySelector('select[name="StaffMemberId"]').value;
+        const selectedDate = document.querySelector('input[name="SelectedDate"]').value;
+
+        if (serviceId && staffMemberId && selectedDate) {
+            const response = await fetch(`/Appointment/GetAvailableTimes?serviceId=${serviceId}&staffMemberId=${staffMemberId}&selectedDate=${selectedDate}`);
+            const availableTimes = await response.json();
+
+            // Populate the Available Times dropdown with the fetched data
+            const availableTimesSelect = document.querySelector('select[name="AvailableTimes"]');
+            availableTimesSelect.innerHTML = ''; // Clear existing options
+            availableTimes.forEach(time => {
+                const option = document.createElement('option');
+                option.value = time.value;
+                option.textContent = time.text;
+                availableTimesSelect.appendChild(option);
+            });
+
+            // Display the available times section
+            document.getElementById('availableTimesSection').style.display = 'block';
+        }
+    }
+    function updateSelectedTime() {
+        const selectedTime = document.getElementById('SelectedTime').value;
+        document.getElementById('SelectedTime').value = selectedTime;
+    }
+
+    // Call checkFormCompletion on page load to ensure the "Next" button is visible if fields are pre-filled
+    window.addEventListener('load', checkFormCompletion);
 </script>
-
 
 
 

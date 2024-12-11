@@ -9,6 +9,7 @@ namespace NailStudioApp.Web.ViewModel.Review
 {
     public class AddReviewViewModel
     {
+        
         public string Content { get; set; }
         [Range(1, 5)]
         public int Rating { get; set; }

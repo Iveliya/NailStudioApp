@@ -83,7 +83,11 @@ namespace NailStudioApp.Webb
             builder.Services.AddAutoMapper(typeof(ServiceMappingProfile));
             builder.Services.AddAutoMapper(typeof(StaffMemberMappingProfile));
             builder.Services.AddAutoMapper(typeof(ReviewMappingProfile));
+            builder.Services.AddAutoMapper(typeof(AppointmentServiceProfile));
+            builder.Services.AddAutoMapper(typeof(ScheduleMappingProfile));
             builder.Services.AddScoped<IUserService, UserService>();
+            //builder.Services.AddScoped<IApoinmemetService, ApointmentService>();
+
 
 
             //builder.Services.AddScoped<IStaffMemberService, StaffMemberService>();

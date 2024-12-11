@@ -1,0 +1,47 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.StaffMember.StaffMemberIndexViewModel>
+
+@{
+    ViewData["Title"] = "Manage Staff Members";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Manage Staff Members</h2>
+        <a href="/StaffMember/Add" class="btn btn-success">Add New Staff Member</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Photo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var staffMember in Model)
+            {
+                <tr>
+                    <td>@staffMember.Name</td>
+                    <td>@staffMember.Role</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(staffMember.PhotoUrl))
+                        {
+                            <img src="@staffMember.PhotoUrl" alt="Photo" width="50" height="50" class="img-thumbnail" />
+                        }
+                        else
+                        {
+                            <span>No Photo</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="/StaffMember/Edit/@staffMember.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="/StaffMember/Delete/@staffMember.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

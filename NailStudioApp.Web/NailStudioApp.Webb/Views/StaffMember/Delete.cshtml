@@ -1,0 +1,24 @@
+﻿@model NailStudioApp.Web.ViewModel.StaffMember.DeleteStaffMemberViewModel
+
+@{
+    ViewData["Title"] = "Delete Staff Member";
+}
+
+<div class="container mt-5">
+    <h2>Are you sure you want to delete this staff member?</h2>
+
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.PhotoUrl" class="card-img-top" alt="Staff Member Photo">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <p class="card-text">Role: @Model.Role</p>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post" class="mt-4">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="@Url.Action("Manage", "StaffMember")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+

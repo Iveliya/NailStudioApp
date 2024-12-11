@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -67,9 +68,7 @@ namespace NailStudioApp.Webb.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-            //[Required]
-            //[Display(Name = "Name")]
-            //public string Name { get; set; }
+            
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -80,6 +79,10 @@ namespace NailStudioApp.Webb.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -116,6 +119,7 @@ namespace NailStudioApp.Webb.Areas.Identity.Pages.Account
                 var user = CreateUser();
                 user.Email = Input.Email;
                 user.Name = "Default Name";
+                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                
                 var result = await _userManager.CreateAsync(user, Input.Password);

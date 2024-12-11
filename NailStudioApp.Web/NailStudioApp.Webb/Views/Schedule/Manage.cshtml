@@ -1,0 +1,40 @@
+﻿@model IEnumerable<NailStudioApp.Web.ViewModel.Schedule.IndexScheduleViewModel>
+
+@{
+    ViewData["Title"] = "Manage Schedules";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary fw-bold">Manage Schedules</h2>
+        <a href="/Schedule/Add" class="btn btn-success">Add New Schedule</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>Staff Member</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Availability</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var schedule in Model)
+            {
+                <tr>
+                    <td>@schedule.StaffMemberName</td>
+                    <td>@schedule.StartTime.ToString("hh:mm tt")</td>
+                    <td>@schedule.EndTime.ToString("hh:mm tt")</td>
+                    <td>@(schedule.IsAvailable ? "Available" : "Not Available")</td>
+                    <td>
+                        <a href="/Schedule/Edit/@schedule.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="/Schedule/Delete/@schedule.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
