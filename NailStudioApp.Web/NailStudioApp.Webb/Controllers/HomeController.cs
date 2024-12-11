@@ -13,10 +13,6 @@ namespace NailStudioApp.Webb.Controllers
             _logger = logger;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
         [HttpGet]
         public IActionResult Index()
         {
@@ -40,4 +36,3 @@ namespace NailStudioApp.Webb.Controllers
         }
     }
 }
-//<partial name="_LoginPartial"/>

@@ -47,6 +47,18 @@
             <div class="card shadow h-100 border-0">
                 <div class="card-body d-flex flex-column align-items-center text-center">
                     <i class="fas fa-video fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">Manage Staff Member</h5>
+                    <p class="card-text text-muted">Add new staff member,update or remove them.</p>
+                    <a asp-area="StaffMember" asp-controller="StaffMember" asp-action="Manage" class="btn btn-info mt-auto w-100">
+                        Go to StaffMember
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow h-100 border-0">
+                <div class="card-body d-flex flex-column align-items-center text-center">
+                    <i class="fas fa-video fa-3x text-info mb-3"></i>
                     <h5 class="card-title">Manage Review</h5>
                     <p class="card-text text-muted">You can remove review</p>
                     <a asp-area="Review" asp-controller="Review" asp-action="Manage" class="btn btn-info mt-auto w-100">
@@ -54,18 +66,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow h-100 border-0">
-                    <div class="card-body d-flex flex-column align-items-center text-center">
-                        <i class="fas fa-video fa-3x text-info mb-3"></i>
-                        <h5 class="card-title">Manage Staff Member</h5>
-                        <p class="card-text text-muted">Add new staff member,update or remove them.</p>
-                        <a asp-area="StaffMember" asp-controller="StaffMember" asp-action="Manage" class="btn btn-info mt-auto w-100">
-                            Go to Review
-                        </a>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>

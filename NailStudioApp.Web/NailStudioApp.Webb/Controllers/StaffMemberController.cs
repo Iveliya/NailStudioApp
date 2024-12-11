@@ -109,16 +109,14 @@ namespace NailStudioApp.Webb.Controllers
 
             if (staffMember == null)
             {
-                return NotFound(); // If the staff member is not found, return NotFound
+                return NotFound(); 
             }
 
-            // Map to DeleteStaffMemberViewModel
             var model = _mapper.Map<DeleteStaffMemberViewModel>(staffMember);
 
-            return View(model); // Return the view with the model
+            return View(model); 
         }
 
-        // POST: StaffMember/Delete/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(DeleteStaffMemberViewModel model)
@@ -128,16 +126,13 @@ namespace NailStudioApp.Webb.Controllers
 
             if (staffMember == null)
             {
-                return NotFound(); // If the staff member is not found, return NotFound
+                return NotFound(); 
             }
 
-            // Perform the "soft delete" by marking the staff member as deleted
             staffMember.IsDeleted = true;
 
-            // Save the changes to the database
             _context.SaveChanges();
 
-            // Redirect to the manage page after successful deletion
             return RedirectToAction("Manage", "StaffMember");
         }
     }

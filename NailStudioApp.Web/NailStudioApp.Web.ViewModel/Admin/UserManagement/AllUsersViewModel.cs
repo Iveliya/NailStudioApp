@@ -11,13 +11,17 @@ namespace NailStudioApp.Web.ViewModel.Admin.UserManagement
 {
     using AutoMapper;
     using NailStudioApp.Services.Mapping;
+    using System.ComponentModel.DataAnnotations;
 
     public class AllUsersViewModel
     {
-        public string Id { get; set; } = null!;
+        [Required(ErrorMessage = "User ID is required.")]
+        public string Id { get; set; } = string.Empty;
 
+        [EmailAddress(ErrorMessage = "The email address is not valid.")]
         public string? Email { get; set; }
 
-        public IEnumerable<string> Roles { get; set; } = null!;
+        [MinLength(1, ErrorMessage = "At least one role must be assigned to the user.")]
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
     }
 }

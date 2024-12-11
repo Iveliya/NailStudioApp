@@ -46,7 +46,7 @@ namespace NailStudioApp.Webb.Controllers
             var model = new AddScheduleViewModel
             {
                 StaffMembers = _context.StaffMembers
-                    .Where(sm => !sm.IsDeleted)  // Exclude deleted staff members
+                    .Where(sm => !sm.IsDeleted) 
                     .Select(sm => new SelectListItem
                     {
                         Value = sm.Id.ToString(),
@@ -73,18 +73,18 @@ namespace NailStudioApp.Webb.Controllers
                 _context.Schedules.Add(schedule);
                 _context.SaveChanges();
 
-                return RedirectToAction("Manage"); // Redirect to manage page
+                return RedirectToAction("Manage");
             }
 
             model.StaffMembers = _context.StaffMembers
-                .Where(sm => !sm.IsDeleted)  // Exclude deleted staff members
+                .Where(sm => !sm.IsDeleted)  
                 .Select(sm => new SelectListItem
                 {
                     Value = sm.Id.ToString(),
                     Text = sm.Name
                 }).ToList();
 
-            return View(model); // Return the model if validation fails
+            return View(model); 
         }
         public IActionResult Edit(Guid id)
         {
@@ -94,7 +94,7 @@ namespace NailStudioApp.Webb.Controllers
 
             if (schedule == null)
             {
-                return NotFound(); // If the schedule doesn't exist
+                return NotFound();
             }
 
             var model = new EditScheuleViewModel
@@ -105,7 +105,7 @@ namespace NailStudioApp.Webb.Controllers
                 EndTime = schedule.EndTime,
                 IsAvailable = schedule.IsAvailable,
                 StaffMembers = _context.StaffMembers
-                    .Where(sm => !sm.IsDeleted)  // Exclude deleted staff members
+                    .Where(sm => !sm.IsDeleted)  
                     .Select(sm => new SelectListItem
                     {
                         Value = sm.Id.ToString(),
@@ -125,60 +125,56 @@ namespace NailStudioApp.Webb.Controllers
 
                 if (schedule == null)
                 {
-                    return NotFound(); // If the schedule doesn't exist
+                    return NotFound(); 
                 }
 
-                // Update schedule properties
                 schedule.StaffMemberId = model.StaffMemberId;
                 schedule.StartTime = model.StartTime;
                 schedule.EndTime = model.EndTime;
                 schedule.IsAvailable = model.IsAvailable;
 
-                _context.SaveChanges(); // Save changes to the database
+                _context.SaveChanges(); 
 
-                return RedirectToAction("Manage"); // Redirect to the schedule list page
+                return RedirectToAction("Manage"); 
             }
 
-            // If validation fails, re-populate the staff members list and return to the form
             model.StaffMembers = _context.StaffMembers
-                .Where(sm => !sm.IsDeleted)  // Exclude deleted staff members
+                .Where(sm => !sm.IsDeleted) 
                 .Select(sm => new SelectListItem
                 {
                     Value = sm.Id.ToString(),
                     Text = sm.Name
                 }).ToList();
 
-            return View(model); // Return the model if validation fails
+            return View(model); 
         }
         public IActionResult Delete(Guid id)
         {
-            // Eagerly load the related StaffMember to ensure it's not null
             var schedule = _context.Schedules
                 .Where(s => s.Id == id && !s.IsDeleted)
-                .Include(s => s.StaffMember) // Include the StaffMember so it is loaded
+                .Include(s => s.StaffMember) 
                 .FirstOrDefault();
 
             if (schedule == null)
             {
-                return NotFound(); // If the schedule doesn't exist
+                return NotFound();
             }
 
-            // Check if the StaffMember is null, which should no longer happen
             if (schedule.StaffMember == null)
             {
-                return NotFound(); // Handle the case where StaffMember is missing
+                return NotFound();
             }
 
             var model = new DeleteScheduleViewModel
             {
                 Id = schedule.Id,
-                StaffMemberName = schedule.StaffMember.Name, // Ensure staff member name is valid
+                StaffMemberName = schedule.StaffMember.Name, 
                 StartTime = schedule.StartTime,
                 EndTime = schedule.EndTime,
                 IsAvailable = schedule.IsAvailable
             };
 
-            return View(model); // Return the Delete view with the schedule details
+            return View(model);
         }
 
 
@@ -191,15 +187,14 @@ namespace NailStudioApp.Webb.Controllers
 
             if (schedule == null)
             {
-                return NotFound(); // If the schedule doesn't exist
+                return NotFound(); 
             }
 
-            // Soft delete the schedule by setting the IsDeleted flag to true
             schedule.IsDeleted = true;
 
-            _context.SaveChanges(); // Save changes to the database
+            _context.SaveChanges(); 
 
-            return RedirectToAction("Manage"); // Redirect to the schedule list page
+            return RedirectToAction("Manage");
         }
 
 

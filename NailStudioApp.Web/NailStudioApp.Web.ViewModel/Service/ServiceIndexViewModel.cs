@@ -10,12 +10,26 @@ namespace NailStudioApp.Web.ViewModel.Service
 {
 
     using NailStudio.Data.Models;
+    using System.ComponentModel.DataAnnotations;
+
     public class ServiceIndexViewModel 
     {
-        public Guid Id { get; set; } 
-        public string Name { get; set; } 
-        public decimal Price { get; set; } 
-        public int DurationInMinutes { get; set; } 
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "Service name is required.")]
+        [StringLength(100, ErrorMessage = "Service name cannot exceed 100 characters.")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Price is required.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Price must be a positive value.")]
+        public decimal Price { get; set; }
+
+        [Required(ErrorMessage = "Duration is required.")]
+        [Range(1, 1440, ErrorMessage = "Duration must be between 1 minute and 1440 minutes (24 hours).")]
+        public int DurationInMinutes { get; set; }
+
+        [Required(ErrorMessage = "Image URL is required.")]
+        [Url(ErrorMessage = "Invalid URL format.")]
         public string ImageUrl { get; set; }
     }
 }

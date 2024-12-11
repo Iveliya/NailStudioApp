@@ -10,12 +10,20 @@ namespace NailStudioApp.Web.ViewModel.Schedule
 {
     public class AddScheduleViewModel
     {
+        [Required(ErrorMessage = "Staff member is required.")]
         public Guid StaffMemberId { get; set; }
+
+        [Required(ErrorMessage = "Start time is required.")]
+        [DataType(DataType.Time, ErrorMessage = "Please enter a valid start time.")]
         public DateTime StartTime { get; set; }
+
+        [Required(ErrorMessage = "End time is required.")]
+        [DataType(DataType.Time, ErrorMessage = "Please enter a valid end time.")]
         public DateTime EndTime { get; set; }
+
         public bool IsAvailable { get; set; } = true;
 
-        public List<SelectListItem> StaffMembers { get; set; } = new List<SelectListItem>(); 
+        public List<SelectListItem> StaffMembers { get; set; } = new List<SelectListItem>();
 
         public string ValidateTimes()
         {

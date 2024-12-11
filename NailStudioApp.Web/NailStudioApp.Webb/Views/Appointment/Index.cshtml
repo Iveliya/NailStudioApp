@@ -22,14 +22,14 @@
                         <div class="card-header bg-info text-white text-center">
                             <h5 class="mb-0">@appointment.ServiceName</h5>
                         </div>
-                        <div class="card-body">
-                            <p><strong>Customer:</strong> @appointment.UserName</p>
+                        <div class="card-body">@* 
+                            <p><strong>Customer:</strong> @appointment.UserName</p> *@
                             <p><strong>Appointment Date:</strong> @appointment.FormattedDate</p>
                             <p><strong>Price:</strong> @appointment.ServicePrice</p>
                             <p><strong>Staff Member:</strong> @appointment.StaffMemberName</p>
-                            <a href="/Appointment/Details/@appointment.Id" class="btn btn-primary btn-sm shadow-sm">
+                            @* <a href="/Appointment/Details/@appointment.Id" class="btn btn-primary btn-sm shadow-sm">
                                 <i class="bi bi-eye me-2"></i> View Details
-                            </a>
+                            </a> *@
                         </div>
                     </div>
                 </div>

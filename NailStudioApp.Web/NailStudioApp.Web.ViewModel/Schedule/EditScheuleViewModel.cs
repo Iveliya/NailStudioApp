@@ -10,13 +10,17 @@ namespace NailStudioApp.Web.ViewModel.Schedule
 {
     public class EditScheuleViewModel
     {
+        [Required(ErrorMessage = "Schedule ID is required.")]
         public Guid Id { get; set; }
 
+        [Required(ErrorMessage = "Staff member is required.")]
         public Guid StaffMemberId { get; set; }
 
+        [Required(ErrorMessage = "Start time is required.")]
         [Display(Name = "Start Time")]
         public DateTime StartTime { get; set; }
 
+        [Required(ErrorMessage = "End time is required.")]
         [Display(Name = "End Time")]
         public DateTime EndTime { get; set; }
 

@@ -11,13 +11,16 @@ namespace NailStudioApp.Web.ViewModel.StaffMember
     {
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Staff member name is required.")]
+        [StringLength(100, ErrorMessage = "Staff member name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Role is required.")]
+        [StringLength(50, ErrorMessage = "Role cannot exceed 50 characters.")]
         public string Role { get; set; }
 
-        [Url]
+        [Url(ErrorMessage = "Please provide a valid URL for the photo.")]
+        [StringLength(200, ErrorMessage = "Photo URL cannot exceed 200 characters.")]
         public string PhotoUrl { get; set; }
     }
 }
