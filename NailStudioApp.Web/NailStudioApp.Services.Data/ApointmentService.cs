@@ -43,5 +43,18 @@ namespace NailStudioApp.Services.Data
                .ToListAsync();
             return appointment;
         }
+        public async Task<Appointment> GetAppointmentByIdAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentNullException(nameof(id), "Appointment ID cannot be empty.");
+            }
+
+            var appointment = await this.appointmentRepository
+                .GetAllAttached()
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            return appointment;
+        }
     }
 }

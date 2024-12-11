@@ -20,15 +20,19 @@ namespace NailStudioApp.Services.Data
         private readonly IMapper mapper;
         public ServiceService(IRepository<Service, Guid> serviceRepository, IMapper mapper)
         {
-            this.serviceRepository = serviceRepository;
-            this.mapper = mapper;
+            this.serviceRepository = serviceRepository ?? throw new ArgumentNullException(nameof(serviceRepository));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+
         }
         public async Task AddServiceAsync(AddServiceFormModel model)
         {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
             var service = this.mapper.Map<Service>(model);
-
             await this.serviceRepository.AddAsync(service);
-
             await this.serviceRepository.SaveChangesAsync();
         }
 
